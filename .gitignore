@@ -1,6 +1,6 @@
 /front_end/node_modules
-front_end/.pnp
-front_end/.pnp.js
+/front_end/.pnp
+/front_end/.pnp.js
 /venv
 /env
 /.vscode
