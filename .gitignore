@@ -1,4 +1,7 @@
-/venv
-/env
-/.vscode
-/app/__pychahe/
+./.vscode/**
+./env
+./__pychache__
+./backend/backend/__pychache__
+./backend/TMS_AdminPanel/__pychache__
+./backend/TMS_Models/__pychache__
+./backend/TMS_Views/__pychache__
