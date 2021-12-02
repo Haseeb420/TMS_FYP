@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <link rel="icon" href=" {% static 'media/logo/logo.png' %}" />
+    {% block titleblock %}{% endblock titleblock %}
+    <title>{{title|title}}</title>
+
+    {% block StylingBlock %}{% endblock StylingBlock %}
+  </head>
+  <body>
+    {% include 'AdminSide/shared/header.html' %} {% block bodyContentBlock %}
+    {%endblock bodyContentBlock %} {% block scriptBlock %}
+     {% endblock scriptBlock%}
+  </body>
+</html>
