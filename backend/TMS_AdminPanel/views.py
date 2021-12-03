@@ -4,11 +4,12 @@ from .DBContent import DBContent
 
 
 def index(request):
-    return render(request, 'AdminSide/templates/index.html', {"title": "Royal Travels"})
+    return render(request, 'AdminSide/templates/index.html', {"title": "Dashboard"})
 
 
 def packages(request):
-    data = {"title": "Royal Travels",
-            "packages": DBContent.getAllPacakges(), "booking": 700}
-    return render(request, 'AdminSide/templates/Packages/Packages.html',
-                  data)
+    data = {
+        "title": "Packages", "packages": DBContent.getAllPacakges(),
+    }
+    print(data)
+    return render(request, 'AdminSide/templates/Packages/Packages.html',  data)

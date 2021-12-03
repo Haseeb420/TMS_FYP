@@ -9,31 +9,7 @@ from TMS_Models.models import Package, Package_Type
 
 class DBContent:
     def getAllPacakges():
-        packages_list = [
-            Package(package_name="Package1", package_price=10000,
-                    description="some text here"),
-            Package(package_name="Package1", package_price=10000,
-                    description="some text here"),
-            Package(package_name="Package1", package_price=10000,
-                    description="some text here"),
-            Package(package_name="Package1", package_price=10000,
-                    description="some text here"),
-            Package(package_name="Package1", package_price=10000,
-                    description="some text here"),
-            Package(package_name="Package1", package_price=10000,
-                    description="some text here"),
-            Package(package_name="Package1", package_price=10000,
-                    description="some text here"),
-            Package(package_name="Package1", package_price=10000,
-                    description="some text here"),
-            Package(package_name="Package1", package_price=10000,
-                    description="some text here"),
-            Package(package_name="Package1", package_price=10000,
-                    description="some text here"),
-            Package(package_name="Package1", package_price=10000,
-                    description="some text here"),
-            Package(package_name="Package1", package_price=10000,
-                    description="some text here")
-        ]
-        print(packages_list)
-        return packages_list
+        packages = Package.objects.all()
+        data = list(packages.values())
+
+        return data
