@@ -3,9 +3,9 @@
 
 
  {% comment %} title block content here  {% endcomment %}
-{% block titleBlock %}
-<title>{{title|title}}</title>
-{% endblock titleBlock %}
+ {% block titleblock %}
+ <title>{{title|title}}-RoyalTravels</title>
+ {% endblock titleblock %}
  
 
 {% block StylingBlock %}
@@ -57,7 +57,13 @@
                 </form>
               </div>
               <hr>
+          </div>  
+          <div class="row">
+            <div class="col-10 mx-auto">
+              <button class="btn btn-warning">Add New Package</button>
+            </div>
           </div>
+        
           <div class="row">
             <div class="col-12">
               <table class="table table-hover table-striped">
@@ -75,16 +81,16 @@
                 </thead>
                 <tbody>
                   
-                 
+                  
                  
                   {% for package in packages %}
                   <tr>
-                    <th scope="row">1</th>
+                    <th scope="row">{{package.package_id}}</th>
                     <td>{{package.package_name}}</td>
                     <td>{{package.package_price}}</td>
                     <td>1</td>
                     <td>{{package.description}}</td>
-                    <td>22</td>
+                    <td>{{package.package_type_id}}</td>
                     <td><button class="btn btn-info">EDIT</button><button class="btn btn-danger mx-3">Delete</button></td>
                     
 
