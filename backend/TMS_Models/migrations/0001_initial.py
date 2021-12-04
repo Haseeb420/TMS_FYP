@@ -16,7 +16,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Accounts_Type',
             fields=[
-                ('account_type_id', models.AutoField(primary_key=True, serialize=False)),
+                ('account_type_id', models.AutoField(
+                    primary_key=True, serialize=False)),
                 ('account_type_name', models.CharField(max_length=255, null=True)),
             ],
         ),
@@ -30,32 +31,34 @@ class Migration(migrations.Migration):
                 ('DOB', models.DateField(null=True)),
                 ('Address', models.CharField(max_length=511, null=True)),
                 ('Picture', models.CharField(max_length=255, null=True)),
-                ('account_type_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='TMS_Models.accounts_type')),
+                ('account_type_id', models.ForeignKey(
+                    null=True, on_delete=django.db.models.deletion.CASCADE, to='TMS_Models.accounts_type')),
             ],
         ),
         migrations.CreateModel(
             name='User_Auth',
             fields=[
-                ('user_auth_id', models.AutoField(primary_key=True, serialize=False)),
+                ('user_auth_id', models.AutoField(
+                    primary_key=True, serialize=False)),
                 ('email', models.EmailField(max_length=255, null=True, unique=True)),
                 ('password', models.CharField(max_length=255, null=True)),
                 ('joinnig_date', models.DateField(null=True)),
-                ('user_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='TMS_Models.users')),
-                ('joinnig_date', models.DateField(default=datetime.date(2021, 10, 24))),
-                ('user_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='TMS_Models.users')),
-            
+                ('user_id', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='TMS_Models.users')),
+
             ],
         ),
         migrations.CreateModel(
             name='Package',
             fields=[
                 ('package_id', models.AutoField(primary_key=True, serialize=False)),
-                ('package_name', models.EmailField(max_length=255, null=True, unique=True)),
+                ('package_name', models.EmailField(
+                    max_length=255, null=True, unique=True)),
                 ('package_price', models.CharField(max_length=255, null=True)),
                 ('Package_type_id', models.DateField(null=True)),
-                ('description', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='TMS_Models.package_type')),
+                ('description', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='TMS_Models.package_type')),
             ],
         ),
-                
+
     ],
-    
