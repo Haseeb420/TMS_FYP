@@ -12,9 +12,11 @@ backend/TMS_Views/migrations/__pycache__/
 backend/TMS_Views/__pycache__/
 
 
-
-
-
+env/Lib/site-packages/__pycache__/
+env/Lib/site-packages/django/__pycache__/
+env/Lib/site-packages/django/db/backends/__pycache__/
+env/Lib/site-packages/django/db/backends/base/__pycache__/
+env/Lib/site-packages/django/db/__pycache__/
 env/Lib/site-packages/django/utils/__pycache__/log.cpython-39.pyc
 env/Lib/site-packages/django/urls/__pycache__/utils.cpython-39.pyc
 env/Lib/site-packages/django/urls/__pycache__/resolvers.cpython-39.pyc
