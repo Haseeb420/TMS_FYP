@@ -1,4 +1,4 @@
-# env/
+env/
 **/__pychache__/
 .vscode/
 backend/backend/__pycache__/
@@ -66,3 +66,6 @@ env/Lib/site-packages/django/db/models/fields/__pycache__/related_descriptors.cp
 env/Lib/site-packages/django/db/models/fields/__pycache__/related_lookups.cpython-39.pyc
 env/Lib/site-packages/django/db/models/fields/__pycache__/reverse_related.cpython-39.pyc
 env/Lib/site-packages/django/urls/__pycache__/conf.cpython-39.pyc
+
+
+env/Lib/site-packages/django/core/management/__pycache__/__init__.cpython-39.pyc
