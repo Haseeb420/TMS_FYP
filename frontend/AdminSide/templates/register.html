@@ -1,0 +1,217 @@
+{% extends 'base.html' %}  {% load staticfiles %} {% load static %} {% block content %}
+<script src={% static 'register/register.js' %}></script>
+<script src="{% static 'table_del.js' %}"></script>
+
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 15px;
+    }
+    
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+    
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 9px;
+        width: 9px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+    
+    input:checked+.slider {
+        background-color: #2196F3;
+    }
+    
+    input:focus+.slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+    
+    input:checked+.slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+    
+    .slider.round {
+        border-radius: 34px;
+    }
+    
+    .slider.round:before {
+        border-radius: 50%;
+    }
+</style>
+
+
+<div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+        </svg>
+</div>
+
+
+<div id="wrapper">
+
+    {% include 'new-admin/_partials/header.html' %} {% include 'new-admin/_partials/side_bar.html' %}
+    {% csrf_token %}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Register Users</h4>
+                </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="white-box" style="padding-bottom:100px">
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3 class="box-title">Users List</h3>
+                            </div>
+                            <div class="col-md-4"></div>
+                            <!-- <div class="col-md-4">
+                                <a class="pull-right btn btn-primary addNew"><i class="fa fa-plus"></i> Add New</a>
+                            </div> -->
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table" id="table_company">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>email</th>
+                                        <th>Date Created</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="company_body">
+                                    {% for object in object_list %}
+                                        {% if object.user_archived %}
+                                        <tr id="{{ object.uuid }}" style="color:red">
+                                            <td>{{ object.name }}</td>
+                                            <td>{{ object.email }}</td>
+                                            <td>{{ object.date_created }}</td>
+                                        </tr>
+                                        {% else %}
+                                        <tr id="{{ object.uuid }}">
+                                            <td>{{ object.name }}</td>
+                                            <td>{{ object.email }}</td>
+                                            <td>{{ object.date_created }}</td>
+                                        </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% include 'pagination_block.html' %}
+                    </div>
+                </div>
+            </div>
+
+        <section class="registerCompany" style="display: none;">
+
+            <form method='POST' role="form" action='' enctype='multipart/form-data' id="formCreateStaff">
+
+                
+                <div class="white-box formBox" style="padding-bottom:100px">
+                    <div id="alert"></div>
+                    <br>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 class="box-title">Create User</h3>
+                                {% for field in form %}
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ field.label_tag }} {{ field }}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="id_company_name">Profile Image:</label>
+                                        <input type="file" name="logo" accept="image/x-png" class="form-control" id="id_logo">
+                                    </div>
+                                    <div class="imgUploadedSection">
+                                        <div class="imgUploadedSection" style="display:none">
+                                            <img id="id_selected_logo" {% if object.logo_url %} src="{{object.logo_url}}" {% endif %} width="100" height="100" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_plan">Subscription Plan:</label>
+                                            <select name="plan" class="form-control" id="id_plan" required placeholder="Select Plan">
+                                                {% for plan in plans %}
+                                                    <option value="{{ plan.uuid }}" id="{{ plan.uuid }}">{{ plan.name }}</option>
+                                                {% endfor %}
+                                                </select>
+                                        </div>
+                                    </div>
+                            </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 pull-right">
+                                    <button data_uuid="" btn_request="create" type="submit" id="id_company_save_btn" class="button btn-sm btn-primary">Save
+                                        </button>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        
+
+
+
+                           
+
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </section>
+
+        </div>
+        <!-- /.container-fluid -->
+        {% include 'new-admin/_partials/footer.html' %}
+    </div>
+
+</div>
+<!-- /#wrapper -->
+
+
+<!-- Menu Plugin JavaScript -->
+<script src="{% static 'js/metisMenu.js' %}"></script>
+<!--slimscroll JavaScript -->
+<script src="{% static 'js/jquery.slimscroll.js' %}"></script>
+<!--Wave Effects -->
+<script src="{% static 'js/waves.js' %}"></script>
+<!-- Custom Theme JavaScript -->
+<script src="{% static 'js/custom.min.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,12 @@
+.form-input{
+    padding: 5px;
+    width: 80%;
+}
+
+.gj-timepicker{
+    width: 100% !important; 
+}
+
+.gj-timepicker-bootstrap .input-group-addon{
+    background: lightgray;
+}

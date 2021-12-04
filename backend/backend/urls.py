@@ -18,6 +18,7 @@ from django.urls import path,include
 
 urlpatterns = [
     path('admin/',include("TMS_AdminPanel.urls")),
-    path('',include("TMS_Views.urls")),
+    path('',include("TMS_AdminPanel.urls")),
+
     
 ]
