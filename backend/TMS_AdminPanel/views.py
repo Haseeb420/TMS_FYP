@@ -14,6 +14,16 @@ class IndexView(View):
         return render(request, self._template_name, data)
 
 
+""""
+     All Packages views are start from here
+"""
+
+"""
+Packages List view code start from here
+
+"""
+
+
 class PackageView(View):
     template_name = "AdminSide/templates/Packages/Packages.html"
     _title = "Packages"+_SiteName
@@ -21,6 +31,62 @@ class PackageView(View):
     def get(self, request):
         data = {"title": self._title}
         return render(request, self.template_name, data)
+
+
+"""
+Packages List view code End from here
+
+"""
+
+"""
+Packages List view code start from here
+
+"""
+
+
+class AddPackage(View):
+    template_name = "AdminSide/templates/Packages/AddPackages.html"
+    _title = "AddPackages"+_SiteName
+
+    def get(self, request):
+        data = {"title": self._title}
+        return render(request, self.template_name, data)
+
+
+"""
+Packages List view code End from here
+
+"""
+
+
+""""
+     All Packages views are ends here 
+"""
+
+
+"""
+All users views code start here
+"""
+
+
+"""User List view code starts here"""
+
+
+class ManageUsers(View):
+    template_name = "AdminSide/templates/Users/users.html"
+    _title = "Users"+_SiteName
+
+    def get(self, request):
+        data = {"title": self._title}
+        return render(request, self.template_name, data)
+
+
+"""User List view code ends here"""
+
+
+"""
+All users views code ends here
+"""
 
 
 class ProductView(View):

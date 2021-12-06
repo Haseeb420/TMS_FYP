@@ -1,21 +1,42 @@
+<style>
+  {% comment %} .show_dropmenu{
+      display:block;
+  }
+  .show_dropmenu li{
+      display:block;
+  } {% endcomment %}
+</style>
 <div class="navbar-default sidebar" role="navigation">
-    <div class="sidebar-nav slimscrollsidebar">
-        <div class="sidebar-head">
-            <h3><span class="fa-fw open-close"><i class="ti-close ti-menu"></i></span> <span class="hide-menu">Navigation</span>
-            </h3>
-        </div>
-        <ul class="nav" id="side-menu">
-            <li style="padding: 70px 0 0;">
-                <a href="#" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Dashboard</a>
-            </li>
-            
-            <li>
-                <a href="{% url 'manage-packages'%}" class="waves-effect"><i class="fa fa-shopping-basket"></i>  Packages</a>
-            </li>
-            <li>
-                <a href="#" class="waves-effect"><i class="fa fa-shopping-basket"></i>  Products</a>
-            </li>
-           <!-- <li>
+  <div class="sidebar-nav slimscrollsidebar">
+    <div class="sidebar-head">
+      <h3>
+        <span class="fa-fw open-close"><i class="ti-close ti-menu"></i></span>
+        <span class="hide-menu">Navigation</span>
+      </h3>
+    </div>
+    <ul class="nav" id="side-menu">
+      <li style="padding: 70px 0 0">
+        <a href="#" class="waves-effect"
+          ><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Dashboard</a
+        >
+      </li>
+
+      <li>
+        <a href="manage-packages" class="waves-effect"
+          ><i class="fa fa-shopping-basket"></i> Packages</a
+        >
+      </li>
+      <li>
+        <a href="manage-users" class="waves-effect"
+          ><i class="fa fa-shopping-basket"></i> Users</a
+        >
+      </li>
+      <li>
+        <a href="#" class="waves-effect"
+          ><i class="fa fa-shopping-basket"></i> Products</a
+        >
+      </li>
+      <!-- <li>
                 <a href="#" class="waves-effect"><i class="fa fa-th-large"></i> Categories</a>
             </li>
             <li>
@@ -54,8 +75,6 @@
                 <a href="#" class="waves-effect"><i class="fa fa-list-ul"
                                                                                aria-hidden="true"></i> Activities</a>
             </li> -->
-           
-        </ul>
-    </div>
-
+    </ul>
+  </div>
 </div>
