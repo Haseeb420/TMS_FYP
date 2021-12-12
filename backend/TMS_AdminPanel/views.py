@@ -115,3 +115,40 @@ class DashboardView(View):
 
     def get(self, request):
         return render(request, self.template_name)
+
+class AddVehicles(View):
+    template_name = "AdminSide/templates/Vehicles/add_vehicle.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+class EditVehicles(View):
+    template_name = "AdminSide/templates/Vehicles/edit_vehicle.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+class ViewVehicles(View):
+    template_name = "AdminSide/templates/Vehicles/vehicle_list.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+class CategoryView(View):
+    template_name = "AdminSide/templates/Category/category.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+class ProfileView(View):
+    template_name = "AdminSide/templates/profile.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+class ChangePassword(View):
+    template_name = "AdminSide/templates/change-password.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
