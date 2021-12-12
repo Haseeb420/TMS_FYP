@@ -27,4 +27,13 @@ urlpatterns = [
     path("edit-products", EditProductView.as_view(), name="edit-products"),
     path("dashboard", DashboardView.as_view(), name="dashboard"),
 
+    path("add_VehicleOwner", Add_VehicleOwnerView.as_view(), name="add_VehicleOwner"),
+    path("edit_VehicleOwner",Edit_VehicleOwnerView.as_view(), name="edit_VehicleOwner"),
+    path("show_VehicleOwner",Show_VehicleOwnerView.as_view(), name="show_VehicleOwner"),
+
+    path("add_hotel", Add_HotelView.as_view(), name="add_hotel"),
+    path("edit_hotel", Edit_HotelView.as_view(), name="edit_hotel"),
+     path("show_hotels",Show_HotelView.as_view(), name="show_hotels"),
+    
+
 ]

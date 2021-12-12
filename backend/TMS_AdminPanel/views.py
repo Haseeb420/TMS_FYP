@@ -115,3 +115,44 @@ class DashboardView(View):
 
     def get(self, request):
         return render(request, self.template_name)
+
+
+
+
+class Add_VehicleOwnerView(View):
+    template_name = "AdminSide/templates/Vehicle_Owners/add_vehicleOwner.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+class Edit_VehicleOwnerView(View):
+    template_name = "AdminSide/templates/Vehicle_Owners/edit_vehicleOwner.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+class Show_VehicleOwnerView(View):
+    template_name = "AdminSide/templates/Vehicle_Owners/list_vehicleOwner.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+
+        
+class Add_HotelView(View):
+    template_name = "AdminSide/templates/Hotels/add_hotel.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+class Edit_HotelView(View):
+    template_name = "AdminSide/templates/Hotels/edit_hotel.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+class Show_HotelView(View):
+    template_name = "AdminSide/templates/Hotels/list_hotels.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
