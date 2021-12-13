@@ -1,0 +1,183 @@
+{% extends 'AdminSide/shared/base.html' %}  {% load staticfiles %} {% load static %} {% block content %}
+<script src="{% static 'table_del.js' %}"></script>
+<link href="{% static 'css/amsify.suggestags.css' %}" rel="stylesheet">
+<script src="{% static 'js/jquery.amsify.suggestags.js' %}"></script>
+<script src="{% static '/tinymce/js/tinymce/tinymce.min.js' %}"></script>
+
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 15px;
+    }   
+    
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+    
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 9px;
+        width: 9px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+    
+    input:checked+.slider {
+        background-color: #2196F3;
+    }
+    
+    input:focus+.slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+    
+    input:checked+.slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+    
+    .slider.round {
+        border-radius: 34px;
+    }
+    
+    .slider.round:before {
+        border-radius: 50%;
+    }
+</style>
+
+
+<div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+        </svg>
+</div>
+
+
+<div id="wrapper">
+
+    {% include 'AdminSide/shared/header.html' %} {% include 'AdminSide/shared/side_bar.html' %}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Add New Hotel</h4>
+                    
+
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="white-box" style="padding-bottom:100px">
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3 class="box-title">Add New Hotel</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <form method='POST' enctype='multipart/form-data' id="Createproduct">
+                                {% csrf_token %}
+                                <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="id_hotel_name">Name:</label> 
+                                    <input type="text" name="hotel_name" maxlength="30" required class="form-control" placeholder="Enter Hotel Name" id="id_hotel_name">
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="id_cityID">City ID:</label> 
+                                    <input type="text" name="cityID" onkeypress="return /^-?(0|[1-9]\d*)$/.test(event.key)" required maxlength="10" class="form-control" placeholder="Enter City ID" id="id_cityID">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="id_hotel_type">Type:</label> 
+                                    <input type="text" name="hotel_type"  required maxlength="50" class="form-control" placeholder="Enter Hotel Type" id="id_hotel_type">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="id_company_name">Image:</label>
+                                    <input type="file" name="logo" accept="image/*" class="form-control" id="id_logo_image">
+                                </div>
+                                <div class="imgUploadedSection" style="display:none">
+                                    <div class="imgUploadedSection" style="display:block">
+                                        <img id="id_selected" width="100" height="100" />
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                  <label for="id_description">Description (optional)</label> 
+                                  <textarea name="description" cols="40" rows="20" 
+                                  class="form-control item_fields" placeholder="Description" 
+                                  id="id_description"></textarea>
+                                </div>
+                                <div>
+                                  <div class=" form-group float-right mr-2">
+                                    
+                                    <button type="submit" class="col-12 btn btn-info pull-right product_update">Add</button>
+                                    
+                                  </div>
+            
+                                </div>
+                              </div>
+                            <div class="col-md-6">
+                            </div>
+                            </form>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+        {% include 'AdminSide/shared/footer.html' %}
+    </div>
+
+</div>
+<!-- /#wrapper -->
+<script src="{% static 'product.js' %}"></script>
+
+<script>
+    $('input[name="varcolor"]').amsifySuggestags({
+    type : 'amsify',
+    tagLimit: 5,
+});
+</script>
+
+<!-- Menu Plugin JavaScript -->
+<script src="{% static 'js/metisMenu.js' %}"></script>
+<!--slimscroll JavaScript -->
+<script src="{% static 'js/jquery.slimscroll.js' %}"></script>
+<!--Wave Effects -->
+<script src="{% static 'js/waves.js' %}"></script>
+<!-- Custom Theme JavaScript -->
+<script src="{% static 'js/custom.min.js' %}"></script>
+{% endblock %}+
