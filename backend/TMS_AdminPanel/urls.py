@@ -26,12 +26,9 @@ urlpatterns = [
 
     # category url starts here
     path('categories', CategoryView.as_view(), name="categories"),
-    #category url ends here
+    # category url ends here
 
-    #profile url starts here
-    path('view-profile', ProfileView.as_view(), name="view-profile"),
-    path('change-password', ChangePassword.as_view(), name="change-password"),
-    #profile url ends here
+
 
 
     # users views url start here
@@ -40,13 +37,14 @@ urlpatterns = [
 
 
     # sales and transactions views url start here
-    path("manage-transactions", ManageTransactions.as_view(), name="manage-transactions"),
+    path("manage-transactions", ManageTransactions.as_view(),
+         name="manage-transactions"),
 
     path("manage-sales", ManageSales.as_view(), name="manage-sales"),
-      # sales and transactions views url end here
+    # sales and transactions views url end here
 
     path("manage-feedback", ManageFeedback.as_view(), name="manage-feedback"),
-    
+
 
 
 
@@ -55,14 +53,17 @@ urlpatterns = [
     path("edit-products", EditProductView.as_view(), name="edit-products"),
     path("dashboard", DashboardView.as_view(), name="dashboard"),
 
-    path("add_VehicleOwner", Add_VehicleOwnerView.as_view(), name="add_VehicleOwner"),
-    path("edit_VehicleOwner",Edit_VehicleOwnerView.as_view(), name="edit_VehicleOwner"),
-    path("show_VehicleOwner",Show_VehicleOwnerView.as_view(), name="show_VehicleOwner"),
+    path("add_VehicleOwner", Add_VehicleOwnerView.as_view(),
+         name="add_VehicleOwner"),
+    path("edit_VehicleOwner", Edit_VehicleOwnerView.as_view(),
+         name="edit_VehicleOwner"),
+    path("show_VehicleOwner", Show_VehicleOwnerView.as_view(),
+         name="show_VehicleOwner"),
 
     path("add_hotel", Add_HotelView.as_view(), name="add_hotel"),
     path("edit_hotel", Edit_HotelView.as_view(), name="edit_hotel"),
-     path("show_hotels",Show_HotelView.as_view(), name="show_hotels"),
-    
+    path("show_hotels", Show_HotelView.as_view(), name="show_hotels"),
+
 
     path("profile", ProfileView.as_view(), name="profile"),
     path("change_password", Change_passwordView.as_view(), name="change_password"),

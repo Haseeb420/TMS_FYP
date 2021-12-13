@@ -70,8 +70,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 "django.template.context_processors.static",
             ],
-            'libraries' : {
-                'staticfiles': 'django.templatetags.static', 
+            'libraries': {
+                'staticfiles': 'django.templatetags.static',
             }
         },
     },
@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tms',
         'USER': 'root',
-        'PASSWORD': 'TSM@pucit',
+        'PASSWORD': 'TMS@pucit',
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
