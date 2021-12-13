@@ -21,6 +21,16 @@ urlpatterns = [
     # users views url end here
 
 
+    # sales and transactions views url start here
+    path("manage-transactions", ManageTransactions.as_view(), name="manage-transactions"),
+
+    path("manage-sales", ManageSales.as_view(), name="manage-sales"),
+      # sales and transactions views url end here
+
+    path("manage-feedback", ManageFeedback.as_view(), name="manage-feedback"),
+    
+
+
 
     path("manage-products", ProductView.as_view(), name="manage-products"),
     path("add-products", AddProductView.as_view(), name="add-products"),

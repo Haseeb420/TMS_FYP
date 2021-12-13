@@ -115,3 +115,21 @@ class DashboardView(View):
 
     def get(self, request):
         return render(request, self.template_name)
+
+class ManageTransactions(View):
+    template_name = "AdminSide/templates/sales-transaction/transactions.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+class ManageSales(View):
+    template_name = "AdminSide/templates/sales-transaction/sales.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+class ManageFeedback(View):
+    template_name = "AdminSide/templates/sales-transaction/feedback.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
