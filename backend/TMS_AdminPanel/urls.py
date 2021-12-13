@@ -26,5 +26,8 @@ urlpatterns = [
     path("add-products", AddProductView.as_view(), name="add-products"),
     path("edit-products", EditProductView.as_view(), name="edit-products"),
     path("dashboard", DashboardView.as_view(), name="dashboard"),
-
+    path("profile", ProfileView.as_view(), name="profile"),
+    path("change_password", Change_passwordView.as_view(), name="change_password"),
+    path("manage_ui", manage_uiView.as_view(), name="manage_ui"),
+    path("add_image", add_imageView.as_view(), name="add_image"),
 ]

@@ -1,107 +1,124 @@
-{% extends 'base.html' %}
+{% extends 'AdminSide/shared/base.html' %}
 {% load staticfiles %}
-{% load crispy_forms_tags %}
+{% comment %} {% load crispy_forms_tags %} {% endcomment %}
 {% block content %}
+<!-- ============================================================== -->
+<!-- Preloader -->
+<!-- ============================================================== -->
+<div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+    </svg>
+</div>
+<script src={% static 'profile.js' %}></script>
+<!-- ============================================================== -->
+<!-- Wrapper -->
+<!-- ============================================================== -->
+<div id="wrapper">
     <!-- ============================================================== -->
-    <!-- Preloader -->
+    <!-- Topbar header - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <div class="preloader">
-        <svg class="circular" viewBox="25 25 50 50">
-            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
-        </svg>
-    </div>
-    <script src={% static 'profile.js' %}></script>
+    {% include 'AdminSide/shared/header.html' %}
+    <!-- End Top Navigation -->
     <!-- ============================================================== -->
-    <!-- Wrapper -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
     <!-- ============================================================== -->
-    <div id="wrapper">
-        <!-- ============================================================== -->
-        <!-- Topbar header - style you can find in pages.scss -->
-        <!-- ============================================================== -->
-        {% include 'new-admin/_partials/header.html' %}
-        <!-- End Top Navigation -->
-        <!-- ============================================================== -->
-        <!-- Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        {% include 'new-admin/_partials/side_bar.html' %}
-        <!-- ============================================================== -->
-        <!-- End Left Sidebar -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Page Content -->
-        <!-- ============================================================== -->
-        <div id="page-wrapper">
-            <div class="container-fluid">
-                <div class="row bg-title">
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Profile page</h4>
-                    </div>
-                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                        <ol class="breadcrumb">
-                            <li><a href="#">Dashboard</a></li>
-                            <li class="active">Profile Page</li>
-                        </ol>
-                    </div>
+    {% include 'AdminSide/shared/side_bar.html' %}
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page Content -->
+    <!-- ============================================================== -->
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <!-- <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Profile page</h4>
                 </div>
-                <!-- /.row -->
-                <!-- .row -->
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="#">Dashboard</a></li>
+                        <li class="active">Profile Page</li>
+                    </ol>
+                </div>
+            </div> -->
+            <!-- /.row -->
+            <!-- .row -->
             <section class="userForm formBox">
                 <div class="row white-box">
                     <div class="col-md-12">
-                        
+
                         <div class="row">
                             <div class="col-md-4">
-                                <h3 class="box-title">User's Profile</h3>
+                                <h3 class="box-title">Admin Profile</h3>
                             </div>
                             <div class="col-md-4"></div>
                             <div class="col-md-4">
-                                <a class="pull-right btn btn-primary" href = "/management/change-password"
-                                    >Change Password</a>
+                                <!-- <a class="pull-right btn btn-primary" href = "/management/change-password"
+                                >Change Password</a> -->
                             </div>
                         </div>
                         <form method='POST' role="form" action='' enctype='multipart/form-data' id="formUserInfo">
-                            {% csrf_token %}
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="id_first_name">Name:</label>
-                                    <input type="text" name="address" maxlength="255" value="{{first_name}}"
-                                        class="form-control" placeholder="Name" id="id_first_name" required>
+                            {% comment %} {% csrf_token %} {% endcomment %}
+                            <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    <label for="inputEmail4">First Name</label>
+                                    <input type="fname" class="form-control" id="inputEmail4" placeholder="First Name" required>
+                                </div>
+                                <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Last Name</label>
+                                    <input type="text" class="form-control" id="inputEmail4" placeholder="Last Name" required>
+                                </div>
+                                <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Email</label>
+                                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword4">Password</label>
+                                    <input type="password" class="form-control" id="inputPassword4" placeholder="Password" required>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="id_email">Email:</label>
-                                    <input type="email" name="address" maxlength="255" value="{{email}}"
-                                        class="form-control" placeholder="Email" id="id_email" required>
-                                </div>
-                            </div>    
-
-                           
-                        </div>
-
-                            <div class="col-md-6">
-                                <a data_uuid="" btn_request="create" type="submit" id="id_user_save_btn" 
-                                    class="button btn-sm btn-primary">Save
-                                </a>
+                            <div class="form-group">
+                              <label for="inputAddress">Address</label>
+                              <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" required>
+                          </div>
+                          <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <label for="inputCity">City</label>
+                                <input type="text" class="form-control" id="inputCity" required>
                             </div>
-
-                        </form>    
+                            <div class="form-group col-md-4">
+                                <label for="perfile_photo">Profile Photo</label>
+                                <input type="file" name="img" required>
+                          </div>
                     </div>
-                </div>
-            </section>
-                <!-- /.row -->
-            </div>
-            <!-- /.container-fluid -->
-            {% include 'new-admin/_partials/footer.html' %}
-        </div>
-        <!-- /#page-wrapper -->
-    </div>
-    <!-- jQuery -->
-    <script src="{% static 'js/metisMenu.js' %}"></script>
-    <!--slimscroll JavaScript -->
-    <script src="{% static 'js/jquery.slimscroll.js' %}"></script>
-    <!--Wave Effects -->
-    <script src="{% static 'js/waves.js' %}"></script>
-    <!-- Custom Theme JavaScript -->
-    <script src="{% static 'js/custom.min.js' %}"></script>
+                    
+              </div>
+              <div class="row">
+                <div class="col-md-7" style="padding-left:25px;">
+              <button type="submit" class="btn btn-primary">Sign in</button>
+              </div>
+              </div>
+          </form>    
+      </div>
+  </div>
+</section>
+<!-- /.row -->
+</div>
+<!-- /.container-fluid -->
+{% include 'AdminSide/shared/footer.html' %}
+</div>
+<!-- /#page-wrapper -->
+</div>
+<!-- jQuery -->
+<script src="{% static 'js/metisMenu.js' %}"></script>
+<!--slimscroll JavaScript -->
+<script src="{% static 'js/jquery.slimscroll.js' %}"></script>
+<!--Wave Effects -->
+<script src="{% static 'js/waves.js' %}"></script>
+<!-- Custom Theme JavaScript -->
+<script src="{% static 'js/custom.min.js' %}"></script>
 {% endblock %}
