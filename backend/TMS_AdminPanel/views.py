@@ -149,6 +149,8 @@ class Add_HotelView(View):
     template_name = "AdminSide/templates/Hotels/add_hotel.html"
 class CategoryView(View):
     template_name = "AdminSide/templates/Category/category.html"
+class ManageTransactions(View):
+    template_name = "AdminSide/templates/sales-transaction/transactions.html"
 
     def get(self, request):
         return render(request, self.template_name)
@@ -157,6 +159,8 @@ class Edit_HotelView(View):
     template_name = "AdminSide/templates/Hotels/edit_hotel.html"
 class ProfileView(View):
     template_name = "AdminSide/templates/profile.html"
+class ManageSales(View):
+    template_name = "AdminSide/templates/sales-transaction/sales.html"
 
     def get(self, request):
         return render(request, self.template_name)
@@ -172,3 +176,8 @@ class ChangePassword(View):
     def get(self, request):
         return render(request, self.template_name)
 
+class ManageFeedback(View):
+    template_name = "AdminSide/templates/sales-transaction/feedback.html"
+
+    def get(self, request):
+        return render(request, self.template_name)

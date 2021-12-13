@@ -1,0 +1,168 @@
+{% extends 'AdminSide/shared/base.html' %} {% load staticfiles %} {% load static %} {% block content %}
+<script src="{% static 'table_del.js' %}"></script>
+<link href="{% static 'css/amsify.suggestags.css' %}" rel="stylesheet">
+<script src="{% static 'js/jquery.amsify.suggestags.js' %}"></script>
+<script src="{% static '/tinymce/js/tinymce/tinymce.min.js' %}"></script>
+
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 15px;
+    }
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 6px;
+        width: 6px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked+.slider {
+        background-color: #2196F3;
+    }
+
+    input:focus+.slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked+.slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+    .packagesPriceField {
+
+        margin-right: 50%;
+    }
+    #cahrt{
+        width:100% ;
+     height:500px;
+
+
+    }
+</style>
+
+
+<div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+    </svg>
+</div>
+
+
+<div id="wrapper">
+
+    {% include 'AdminSide/shared/header.html' %} {% include 'AdminSide/shared/side_bar.html' %}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">TRANSACTION</h4>
+
+
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="row">
+                    <div id="cahrt col-8" >
+                        <canvas id="myChart"></canvas>
+                    </div>
+             
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->
+{% include 'AdminSide/shared/footer.html' %}
+</div>
+
+</div>
+<!-- /#wrapper -->
+<script src="{% static 'product.js' %}"></script>
+
+<script>
+    $('input[name="varcolor"]').amsifySuggestags({
+        type: 'amsify',
+        tagLimit: 5,
+    });
+</script>
+
+<!-- Menu Plugin JavaScript -->
+<script src="{% static 'js/metisMenu.js' %}"></script>
+<!--slimscroll JavaScript -->
+<script src="{% static 'js/jquery.slimscroll.js' %}"></script>
+<!--Wave Effects -->
+<script src="{% static 'js/waves.js' %}"></script>
+<!-- Custom Theme JavaScript -->
+<script src="{% static 'js/custom.min.js' %}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.1/chart.min.js"
+integrity="sha512-O2fWHvFel3xjQSi9FyzKXWLTvnom+lOYR/AUEThL/fbP4hv1Lo5LCFCGuTXBRyKC4K4DJldg5kxptkgXAzUpvA=="
+crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+var obj = {
+    Transaction: [20000, 1000, 105000, 560000, 673234, 923]
+};
+
+const labels = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+];
+const data = {
+    labels: labels,
+    datasets: [{
+        label: 'My First dataset',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'crimson',
+        data: obj.Transaction,
+    }]
+};
+const config = {
+    type: 'line',
+    data: data,
+    options: {}
+};
+const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+);
+</script>
+{% endblock %}
