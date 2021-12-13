@@ -121,18 +121,24 @@ class DashboardView(View):
 
 class Add_VehicleOwnerView(View):
     template_name = "AdminSide/templates/Vehicle_Owners/add_vehicleOwner.html"
+class AddVehicles(View):
+    template_name = "AdminSide/templates/Vehicles/add_vehicle.html"
 
     def get(self, request):
         return render(request, self.template_name)
 
 class Edit_VehicleOwnerView(View):
     template_name = "AdminSide/templates/Vehicle_Owners/edit_vehicleOwner.html"
+class EditVehicles(View):
+    template_name = "AdminSide/templates/Vehicles/edit_vehicle.html"
 
     def get(self, request):
         return render(request, self.template_name)
 
 class Show_VehicleOwnerView(View):
     template_name = "AdminSide/templates/Vehicle_Owners/list_vehicleOwner.html"
+class ViewVehicles(View):
+    template_name = "AdminSide/templates/Vehicles/vehicle_list.html"
 
     def get(self, request):
         return render(request, self.template_name)
@@ -141,12 +147,16 @@ class Show_VehicleOwnerView(View):
         
 class Add_HotelView(View):
     template_name = "AdminSide/templates/Hotels/add_hotel.html"
+class CategoryView(View):
+    template_name = "AdminSide/templates/Category/category.html"
 
     def get(self, request):
         return render(request, self.template_name)
 
 class Edit_HotelView(View):
     template_name = "AdminSide/templates/Hotels/edit_hotel.html"
+class ProfileView(View):
+    template_name = "AdminSide/templates/profile.html"
 
     def get(self, request):
         return render(request, self.template_name)
@@ -156,3 +166,9 @@ class Show_HotelView(View):
 
     def get(self, request):
         return render(request, self.template_name)
+class ChangePassword(View):
+    template_name = "AdminSide/templates/change-password.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+

@@ -16,6 +16,24 @@ urlpatterns = [
 
     # packages views urls code end here
 
+
+    # vehicles views urls starts from here
+    path("add-vehicles", AddVehicles.as_view(), name="add-vehicles"),
+    path("edit-vehicles", EditVehicles.as_view(), name="edit-vehicles"),
+    path("list-vehicles", ViewVehicles.as_view(), name="list-vehicles"),
+
+    # vehicles views urls code end here
+
+    # category url starts here
+    path('categories', CategoryView.as_view(), name="categories"),
+    #category url ends here
+
+    #profile url starts here
+    path('view-profile', ProfileView.as_view(), name="view-profile"),
+    path('change-password', ChangePassword.as_view(), name="change-password"),
+    #profile url ends here
+
+
     # users views url start here
     path("manage-users", ManageUsers.as_view(), name="manage-users"),
     # users views url end here

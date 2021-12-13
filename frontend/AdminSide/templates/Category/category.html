@@ -1,0 +1,283 @@
+{% extends 'AdminSide/shared/base.html' %} {% load staticfiles %} {% load static %} {% block content %}
+<script src="{% static 'category.js' %}"></script>
+<script src="{% static 'table_del.js' %}"></script>
+<script src="{% static 'js/moment.min.js' %}"></script>
+
+
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 15px;
+    }
+    
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+    
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 9px;
+        width: 9px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+    
+    input:checked+.slider {
+        background-color: #2196F3;
+    }
+    
+    input:focus+.slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+    
+    input:checked+.slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+    
+    .slider.round {
+        border-radius: 34px;
+    }
+    
+    .slider.round:before {
+        border-radius: 50%;
+    }
+</style>
+
+
+<div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+        </svg>
+</div>
+
+
+<div id="wrapper">
+
+    {% include 'AdminSide/shared/header.html' %} {% include 'AdminSide/shared/side_bar.html' %}
+    {% csrf_token %}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Category List</h4>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="white-box" style="padding-bottom:100px">
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3 class="box-title">Category List</h3>
+                            </div>
+                            <div class="col-md-8">
+                                <button type="button" class="btn btn-primary pull-right" data-toggle="modal"
+                                 data-target="#exampleModal">
+                                 Create Category
+                                  </button>
+                                <!-- <a class="button btn-sm btn-primary pull-right"
+                                href="../../management/create-product/">Create Category
+                                </a> -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="search_name_table"
+                                                type="text" autocomplete="off"
+                                                maxlength="128" placeholder="Search by Name">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-primary btn_code_table" type="button" title="Search" id="id_table"
+                                                input_id="search_name_table"
+                                                search_type="category__name"
+                                                search_param_type="category_name"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </div>
+    </div>
+                        <div class="table-responsive">
+                            <table class="table" id="table_company">
+                                <thead>
+                                    <tr>
+                                      <th>Name</th>
+                                      <th>Category Type</th>
+                                      <th>Category code</th>
+                                      <th>Created at</th>
+                                      <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                <tbody id="company_body">
+                                   
+                                        <tr id="id_ {{object.uuid}} ">
+                                            <td >object.name</td>
+                                            <td >object.cat_type</td>
+                                            <td >object.code</td>
+                                            <td>object.created_at</td>
+                                            <td>
+                                                <a class="button btn-sm btn-primary btnEditcategory" style="margin-left:8px"
+                                                data-toggle="modal" data-uuid="{{ object.uuid }}"
+                                                data-target="#updatecat">
+                                                    <i class="fa fa-pencil"></i></a>
+                                                <a type="submit" class="button btn-sm btn-danger delete_product" 
+                                                data-uuid="{{ object.uuid }}" style="margin-left:8px">
+                                                <i class="fa fa-trash-o"></i></a>
+                                            </td>              
+                                        </tr>
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="exampleModalLabel">Create Category <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button></h4>
+                  
+                </div>
+                <div class="modal-body">
+                    <form method='POST' enctype='multipart/form-data' id="CreateCategory">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="id_first_name">Name:</label> 
+                            <input type="text" name="name" maxlength="150" required class="form-control" placeholder="Name" id="id_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="id_category">Category:</label>
+                            <select name="category" class="form-control" id="id_category" required placeholder="Select Category">
+                                <option value="">
+                                    Select
+                                </option>
+                                
+                                    <option value="cat">
+                                         cat|capfirst 
+                                    </option>
+                                
+                                </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_Code">Code:</label> 
+                            <input type="text" name="Code" required maxlength="10" class="form-control" placeholder="Code" id="id_Code">
+                        </div>
+                        <div class="form-group">
+                            <label for="id_company_name">Image:</label>
+                            <input type="file" name="logo" accept="image/*" required class="form-control" id="id_logo_image">
+                        </div>
+                        <div class="imgUploadedSection">
+                            <div class="imgUploadedSection" style="display:block">
+                                <img id="id_selected" width="100" height="100" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary pull-right cat_update" style="margin-right:7px">Save</button></div>
+                        </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="updatecat" tabindex="-1" role="dialog" aria-labelledby="updatecatLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="updatecatLabel">Update Category <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button></h4>
+                  
+                </div>
+                <div class="modal-body">
+                    <form method='POST' enctype='multipart/form-data' id="UpdateCategory">
+                        {% csrf_token %}
+                        <input type="hidden" name="uuuid" id="p_uuid" value="{{ uuid }}">
+                        <div class="form-group">
+                            <label for="id_first_name">Name:</label> 
+                            <input type="text" name="name" maxlength="150" required class="form-control" placeholder="Name" id="id_names">
+                        </div>
+                        <div class="form-group">
+                            <label for="id_categorys">Category:</label>
+                            <select name="categorys" class="form-control" id="id_categorys" required placeholder="Select Category">
+                                <option value="">
+                                    Select
+                                </option>
+                                
+                                    <option value="cat">
+                                         cat|capfirst 
+                                    </option>
+                             
+                                </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_Code">Code:</label> 
+                            <input type="text" name="Code" required maxlength="10" class="form-control" placeholder="Code" id="id_Codes">
+                        </div>
+                        <div class="form-group">
+                            <label for="id_company_name">Image:</label>
+                            <input type="file" name="logo" accept="image/*" class="form-control" id="id_logo_images">
+                        </div>
+                        <div class="imgUploadedSection">
+                            <div class="imgUploadedSection" style="display:block">
+                                <img id="id_selecteds" width="100" height="100" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary pull-right catgory_update" style="margin-right:7px">Update</button></div>
+                        </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- /.container-fluid -->
+        {% include 'AdminSide/shared/footer.html' %}
+    </div>
+
+</div>
+<!-- /#wrapper -->
+
+
+<!-- Menu Plugin JavaScript -->
+<script src="{% static 'js/metisMenu.js' %}"></script>
+<!--slimscroll JavaScript -->
+<script src="{% static 'js/jquery.slimscroll.js' %}"></script>
+<!--Wave Effects -->
+<script src="{% static 'js/waves.js' %}"></script>
+<!-- Custom Theme JavaScript -->
+<script src="{% static 'js/custom.min.js' %}"></script>
+{% endblock %}

@@ -23,11 +23,10 @@
       </li>
       <li>
         <a class="profile-pic" href="#"> <img src="{% static 'plugins/images/users/varun.jpg' %}" alt="user-img"
-            width="36" class="img-circle"><b class="hidden-xs">{% if request.user.name %}{{request.user.name}}{% else
-            %}admin{% endif %}</b></a>
+            width="36" class="img-circle"><b class="hidden-xs">admin</b></a>
       </li>
       <li>
-        <a href="#" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Profile</a>
+        <a href="view-profile" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Profile</a>
       </li>
       <li>
         <a href="#">Logout</a>
