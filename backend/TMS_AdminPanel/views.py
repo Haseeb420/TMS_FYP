@@ -208,11 +208,7 @@ class Show_HotelView(View):
         return render(request, self.template_name)
 
 
-class ChangePassword(View):
-    template_name = "AdminSide/templates/change-password.html"
 
-    def get(self, request):
-        return render(request, self.template_name)
 
 
 class ManageFeedback(View):
@@ -220,3 +216,19 @@ class ManageFeedback(View):
 
     def get(self, request):
         return render(request, self.template_name)
+        
+class Change_passwordView(View):
+    template_name = "AdminSide/templates/change_password.html"
+
+    def get(self, request):
+        return render(request, self.template_name)       
+class manage_uiView(View):
+    template_name = "AdminSide/templates/ui_management.html"
+
+    def get(self, request):
+        return render(request, self.template_name)            
+class add_imageView(View):
+    template_name = "AdminSide/templates/add_slider_image.html"
+
+    def get(self, request):
+        return render(request, self.template_name)          

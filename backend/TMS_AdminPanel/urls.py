@@ -64,4 +64,8 @@ urlpatterns = [
      path("show_hotels",Show_HotelView.as_view(), name="show_hotels"),
     
 
+    path("profile", ProfileView.as_view(), name="profile"),
+    path("change_password", Change_passwordView.as_view(), name="change_password"),
+    path("manage_ui", manage_uiView.as_view(), name="manage_ui"),
+    path("add_image", add_imageView.as_view(), name="add_image"),
 ]
