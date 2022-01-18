@@ -66,7 +66,7 @@
                                     <th>Joinning Date</th>
                                   </tr>
                                   </thead>
-                                  <tbody id="company_body">
+                                  <tbody id="users">
                                       
                                           <tr>
                                               <td>1</td>
@@ -112,4 +112,24 @@
     <script src="{% static 'js/jquery.slimscroll.js' %}"></script>    
     <script src="{% static 'js/custom.min.js' %}"></script>
     <script src="{% static 'js/metisMenu.js' %}"></script>
+    {% comment %} <script>
+
+        $(document).ready(function () {
+            $ajax({
+                url: '../management/get-company-list',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $('#users').empty();
+                    $.each(data, function (index, object) {
+                        $('#users').append(
+                            '<tr>' +
+                            '<td>' + object.id + '</td>' +
+                            '<td>' + object.name + '</td>' +
+                            '<td>' + object.email + '</td>' +
+                            '<td>' + object.dob + '</td>' +
+                            '<td>' + object.
+        });
+    </script> {% endcomment %}
+
 {% endblock %}
