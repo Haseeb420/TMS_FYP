@@ -1,17 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
+from django.views.generic import TemplateView
 # Create your views here.
 
 _SiteName = "-Royal Travels"
 
 
-class IndexView(View):
-    _template_name = "AdminSide/templates/dashboard.html"
-    _title = "Dashboard"+_SiteName
+class IndexView(TemplateView):
+    template_name = 'AdminSide/templates/dashboard.html'
 
     def get(self, request):
-        data = {"title": self._title}
-        return render(request, self._template_name, data)
+        return render(request, self.template_name, {'siteName': _SiteName})
 
 
 """"

@@ -1,23 +1,18 @@
 {
-  "files": {
-    "main.css": "/static/css/main.a617e044.chunk.css",
-    "main.js": "/static/js/main.bebde9cc.chunk.js",
-    "main.js.map": "/static/js/main.bebde9cc.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.8566bdd8.js",
-    "runtime-main.js.map": "/static/js/runtime-main.8566bdd8.js.map",
-    "static/js/2.cfbb3e66.chunk.js": "/static/js/2.cfbb3e66.chunk.js",
-    "static/js/2.cfbb3e66.chunk.js.map": "/static/js/2.cfbb3e66.chunk.js.map",
-    "static/js/3.707a0e90.chunk.js": "/static/js/3.707a0e90.chunk.js",
-    "static/js/3.707a0e90.chunk.js.map": "/static/js/3.707a0e90.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/main.a617e044.chunk.css.map": "/static/css/main.a617e044.chunk.css.map",
-    "static/js/2.cfbb3e66.chunk.js.LICENSE.txt": "/static/js/2.cfbb3e66.chunk.js.LICENSE.txt",
-    "static/media/logo.689a9f4c.png": "/static/media/logo.689a9f4c.png"
-  },
-  "entrypoints": [
-    "static/js/runtime-main.8566bdd8.js",
-    "static/js/2.cfbb3e66.chunk.js",
-    "static/css/main.a617e044.chunk.css",
-    "static/js/main.bebde9cc.chunk.js"
-  ]
+  "main.css": "/FYP_Frontend/static/css/main.890fac85.chunk.css",
+  "main.js": "/FYP_Frontend/static/js/main.47815387.chunk.js",
+  "main.js.map": "/FYP_Frontend/static/js/main.47815387.chunk.js.map",
+  "static/js/1.2c80ac1f.chunk.js": "/FYP_Frontend/static/js/1.2c80ac1f.chunk.js",
+  "static/js/1.2c80ac1f.chunk.js.map": "/FYP_Frontend/static/js/1.2c80ac1f.chunk.js.map",
+  "static/css/2.113921e6.chunk.css": "/FYP_Frontend/static/css/2.113921e6.chunk.css",
+  "static/js/2.d0882371.chunk.js": "/FYP_Frontend/static/js/2.d0882371.chunk.js",
+  "static/js/2.d0882371.chunk.js.map": "/FYP_Frontend/static/js/2.d0882371.chunk.js.map",
+  "runtime~main.js": "/FYP_Frontend/static/js/runtime~main.d439c00d.js",
+  "runtime~main.js.map": "/FYP_Frontend/static/js/runtime~main.d439c00d.js.map",
+  "static/media/1.png": "/FYP_Frontend/static/media/1.6814cd0e.png",
+  "static/css/main.890fac85.chunk.css.map": "/FYP_Frontend/static/css/main.890fac85.chunk.css.map",
+  "static/css/2.113921e6.chunk.css.map": "/FYP_Frontend/static/css/2.113921e6.chunk.css.map",
+  "index.html": "/FYP_Frontend/index.html",
+  "precache-manifest.3d6e994293ddd7fca6eaa4e1452cd150.js": "/FYP_Frontend/precache-manifest.3d6e994293ddd7fca6eaa4e1452cd150.js",
+  "service-worker.js": "/FYP_Frontend/service-worker.js"
 }

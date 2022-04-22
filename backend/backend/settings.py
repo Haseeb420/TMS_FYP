@@ -30,16 +30,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'TMS_Views',
-    'TMS_Models',
-    'TMS_AdminPanel',
+    'TMS_Views.apps.TmsViewsConfig',
+    'TMS_Models.apps.TmsModelsConfig',
+    'TMS_AdminPanel.apps.TmsAdminpanelConfig',
+    'TMS_API.apps.TmsApiConfig',
 ]
 
 MIDDLEWARE = [
@@ -143,3 +143,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_ROOT = BASE_DIR / '../frontend/UserSide/build/static/'
+
+MEDIA_URL = '/user-media/'

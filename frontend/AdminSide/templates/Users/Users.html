@@ -54,39 +54,20 @@
                           </div>
                              
                           <div class="table-responsive">
-                              <table class="table" id="table_company">
-                                  {% comment %} {% include 'AdminSide/shared/table_header.html' %} {% endcomment %}
+                              <table class="table" id="royal_travels_users">
+                                  
                                   <thead>
                                   <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Email/Username</th>
-                                    <th>DOB</th>
+                                    <th>Email</th>
                                     <th>Gender</th>
-                                    <th>Joinning Date</th>
+                                    <th>DOB</th>
+                                    <th>Address</th>
+                                    <th>Account Type</th>
                                   </tr>
                                   </thead>
                                   <tbody id="users">
-                                      
-                                          <tr>
-                                              <td>1</td>
-                                              <td >Muhammad Haseeb/td>
-                                              <td >bitf18a018@pucit.edu.pk</td>
-                                              <td>01-08-2000</td>
-                                              <td>Male</td>
-                                              <td >05-10-2021</td>
-                                              <td>
-
-                                                        
-
-                                                  {% comment %} <a class="button btn-sm btn-primary btnEditproduct" style="margin-left:8px"
-                                                      href="../management/update-product/{{ object.uuid }}">
-                                                      <i class="fa fa-pencil"></i></a> {% endcomment %}
-                                                   <a type="submit" class="button btn-sm btn-danger delete_product" 
-                                                  data-uuid="{{ object.uuid }}" style="margin-left:8px">
-                                                  <i class="fa fa-trash-o"></i></a> 
-                                              </td>              
-                                          </tr>
                                       
                                   </tbody>
                               </table>
@@ -112,24 +93,133 @@
     <script src="{% static 'js/jquery.slimscroll.js' %}"></script>    
     <script src="{% static 'js/custom.min.js' %}"></script>
     <script src="{% static 'js/metisMenu.js' %}"></script>
-    {% comment %} <script>
-
+   <script>
+       var user_api_url = "http://127.0.0.1:8000/tms_api/users_api/";
+       var account_type_api_url="http://127.0.0.1:8000/tms_api/accout_type_api/";
+       var user_auth_api_url="http://127.0.0.1:8000/tms_api/user_auth_api/";
         $(document).ready(function () {
-            $ajax({
-                url: '../management/get-company-list',
+            function getUsersCredentials(){
+                let users_credentials=[];
+                $.ajax({
+                    url: user_auth_api_url,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        data=JSON.parse(data);
+                        $.each(data, function (index, object) {
+                            users_credentials.push(object);
+                        });
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+                return users_credentials;
+            }
+            var users_credentials = getUsersCredentials();
+            function getUserEmailById(UserId){
+                var user_email = "";
+                $.each(users_credentials, function (index, object) {
+                    if(object.UserId==UserId){
+                        user_email=object.Email;
+                        return user_email;
+                    }
+                });
+                return user_email;
+            }
+            function getAccountTypes() {
+                let account_types=[];
+                                $.ajax({
+                    url: account_type_api_url,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        $.each(data, function (index, object) {
+                            account_types.push(object);
+                        });
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+                return account_types;
+            }
+            
+            var account_types = getAccountTypes();
+            function getAccountTypeById(id) {
+                var account_type = "";
+                for(var i=0;i<account_types.length;i++){
+                    if(account_types[i].AccountsTypeId==id){
+                        account_type=account_types[i].AccountTypeName;
+                        break;
+                    }
+                }
+                return account_type;
+            }
+            getUsers();
+            function getUsers() {
+                $.ajax({
+                url: user_api_url,
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
                     $('#users').empty();
+                    user_account_type="";
                     $.each(data, function (index, object) {
-                        $('#users').append(
-                            '<tr>' +
-                            '<td>' + object.id + '</td>' +
-                            '<td>' + object.name + '</td>' +
-                            '<td>' + object.email + '</td>' +
-                            '<td>' + object.dob + '</td>' +
-                            '<td>' + object.
+                        $('#users').append(`<tr><td>${object.UserId}</td>
+                            <td>${object.Fname + " " + object.Lname}</td>
+                            <td>${getUserEmailById(object.UserId)}</td>
+                            <td>${object.Gender}</td>
+                            <td>${object.UserDOB}</td>
+                            <td>${object.Address}</td>
+                            <td>${getAccountTypeById(object.AccountTypeId)}</td>
+                             <td>
+                                <a  class="button btn-sm btn-danger" 
+                                id="btn-${object.UserId}"
+                                 style="margin-left:8px">
+                                <i class="fa fa-trash-o"></i></a> 
+                            </td> 
+                            </tr>`);
+                        document.getElementById(`btn-${object.UserId}`).addEventListener("click", () => {
+                            DeleteUserByID(object.UserId); 
+                        });
+                    });
+                }
+            });
+            }
+
+            function DeleteUserByID(id) {
+                
+                var flag=confirm("Are you sure you want to delete this user?");
+                if(flag){
+                    data={
+                        "id":id
+                    }
+                $.ajax(
+                    {
+                        url: user_api_url + id,
+                        type: 'DELETE',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        data: data,
+                        success: function (data) {
+                            alert("User deleted successfully");
+                            getUsers();
+                        },
+                        error: function (data) {
+                            alert("User not deleted");
+                        }
+                    }
+                );
+            }
+            else{
+                return;
+            }
+
+            }
         });
-    </script> {% endcomment %}
+
+
+    </script>
 
 {% endblock %}
