@@ -82,8 +82,6 @@ class Hotels(models.Model):
     HotelName = models.CharField(max_length=255, null=True)
     HotelAddress = models.CharField(max_length=511, null=True)
     HotelCityId = ForeignKey(City, on_delete=models.CASCADE)
-    HotelStateId = ForeignKey(State, on_delete=models.CASCADE)
-    HotelCountryId = ForeignKey(Country, on_delete=models.CASCADE)
     HotelContact = models.CharField(max_length=255, null=True)
     HotelEmail = models.EmailField(max_length=255, null=True)
     HotelTypeId = ForeignKey(HotelsType, on_delete=models.CASCADE)

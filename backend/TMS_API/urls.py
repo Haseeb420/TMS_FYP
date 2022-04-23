@@ -1,9 +1,12 @@
+from multiprocessing.dummy import Namespace
 from django.urls import path, include
 from TMS_API import views
 from rest_framework import routers
 
-
 r = routers.DefaultRouter()
+r.register('country', views.CountryView, basename='country')
+r.register('state', views.StateView, basename='state')
+r.register('city', views.CityView, basename='city')
 r.register('accout_type_api', views.AccountsTypeView,
            basename='accout_type_api')
 r.register('package_type_api', views.PackageTypeView,

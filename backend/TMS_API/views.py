@@ -10,6 +10,29 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework import generics, viewsets
 
 # Create your views here.
+"""
+City country state related api starts here
+"""
+
+
+class CountryView(viewsets.ModelViewSet):
+    queryset = models.Country.objects.all()
+    serializer_class = serializers.CountrySerializer
+
+
+class StateView(viewsets.ModelViewSet):
+    queryset = models.State.objects.all()
+    serializer_class = serializers.StateSerializer
+
+
+class CityView(viewsets.ModelViewSet):
+    queryset = models.City.objects.all()
+    serializer_class = serializers.CitySerializer
+
+
+"""
+City country state related api ends here
+"""
 
 """
 Users related apis starts here
@@ -221,3 +244,67 @@ class PackageView(APIView):
 """
 packages related api ends here
 """
+
+
+"""
+Hotels related apis starts here
+"""
+
+
+class HotelsTypeView(viewsets.ModelViewSet):
+    queryset = models.Hotels.objects.all()
+    serializer_class = serializers.HotelSerializer
+
+
+class HotelsView(APIView):
+    def get(self, request, pk=None, format=None):
+        try:
+            if pk:
+                try:
+                    hotel = models.Hotels.objects.get(HotelId=pk)
+                    hotel_serializer = serializers.HotelSerializer(
+                        hotel)
+                    return Response(hotel_serializer.data, status=200)
+                except models.Hotels.DoesNotExist:
+                    return Response(status=status.HTTP_404_NOT_FOUND)
+            else:
+                hotel = models.Hotels.objects.all()
+                hotel_serializer = serializers.HotelSerializer(
+                    hotel, many=True)
+                return Response(hotel_serializer.data, 200)
+        except Exception as e:
+            msg = {'msg': 'Error occured', 'error': e}
+            json_data = JSONRenderer().render(msg)
+            return Response(json_data, status=status.HTTP_400_BAD_REQUEST)
+
+    def post(self, request, format=None):
+        hotel_serializer = serializers.HotelSerializer(
+            data=request.data)
+        if hotel_serializer.is_valid():
+            hotel_serializer.save()
+            msg = {'msg': 'Hotel added successfully'}
+            json_data = JSONRenderer().render(msg)
+            return Response(json_data, 200)
+        return Response(hotel_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, pk, format=None):
+        try:
+            hotel = models.Hotels.objects.get(HotelId=pk)
+            hotel_serializer = serializers.HotelSerializer(
+                hotel, data=request.data, partial=True)
+            if hotel_serializer.is_valid():
+                hotel_serializer.save()
+                msg = {'msg': 'Hotel updated successfully'}
+                json_data = JSONRenderer().render(msg)
+                return Response(json_data, 200)
+        except models.Hotels.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, pk, format=None):
+        try:
+            hotel = models.Hotels.objects.get(HotelId=pk).delete()
+            msg = {'msg': 'Hotel deleted successfully'}
+            json_data = JSONRenderer().render(msg)
+            return Response(json_data, status=status.HTTP_204_NO_CONTENT)
+        except models.Hotels.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
