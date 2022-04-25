@@ -10,7 +10,7 @@ class IndexView(TemplateView):
     template_name = 'AdminSide/templates/AdminUI/index.html'
 
     def get(self, request):
-        return render(request, self.template_name, {'siteName': _SiteName})
+        return render(request, self.template_name, {'siteName': "Dashboard"+_SiteName})
 
 
 """"
@@ -71,13 +71,12 @@ All users views code start here
 """User List view code starts here"""
 
 
-class ManageUsers(View):
-    template_name = "AdminSide/templates/Users/users.html"
+class ManageUsers(TemplateView):
+    template_name = "AdminSide/templates/Users/Users.html"
     _title = "Users"+_SiteName
 
     def get(self, request):
-        data = {"title": self._title}
-        return render(request, self.template_name, data)
+        return render(request, self.template_name, {'siteName': self._title})
 
 
 """User List view code ends here"""

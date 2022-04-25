@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', include("TMS_AdminPanel.urls")),
+    path('admin/', include("TMS_AdminPanel.urls", namespace="TMS_AdminPanel"),),
     path('tms_api/', include("TMS_API.urls")),
     path('', include("TMS_Views.urls")),
 

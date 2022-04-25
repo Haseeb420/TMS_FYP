@@ -252,8 +252,8 @@ Hotels related apis starts here
 
 
 class HotelsTypeView(viewsets.ModelViewSet):
-    queryset = models.HotelsType.objects.all()
-    serializer_class = serializers.HotelsTypeSerializer
+    queryset = models.Hotels.objects.all()
+    serializer_class = serializers.HotelSerializer
 
 
 class HotelsView(APIView):
@@ -309,8 +309,6 @@ class HotelsView(APIView):
         except models.Hotels.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-
-""" Hotels related api ends here """
 
 """ 
     Vehicle related apis starts here
@@ -376,3 +374,8 @@ class VehicleView(APIView):
             return Response(json_data, status=status.HTTP_204_NO_CONTENT)
         except models.Vehicles.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+""" 
+    Vehicle related apis ends here
+"""
