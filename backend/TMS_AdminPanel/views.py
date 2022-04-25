@@ -7,7 +7,7 @@ _SiteName = "-Royal Travels"
 
 
 class IndexView(TemplateView):
-    template_name = 'AdminSide/templates/dashboard.html'
+    template_name = 'AdminSide/templates/AdminUI/index.html'
 
     def get(self, request):
         return render(request, self.template_name, {'siteName': _SiteName})

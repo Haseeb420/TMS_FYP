@@ -145,7 +145,7 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_ROOT = BASE_DIR / '../frontend/UserSide/build/static/'
+MEDIA_ROOT = BASE_DIR / '../frontend/images/'
 
 MEDIA_URL = '/user-media/'
 

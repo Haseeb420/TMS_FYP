@@ -252,8 +252,8 @@ Hotels related apis starts here
 
 
 class HotelsTypeView(viewsets.ModelViewSet):
-    queryset = models.Hotels.objects.all()
-    serializer_class = serializers.HotelSerializer
+    queryset = models.HotelsType.objects.all()
+    serializer_class = serializers.HotelsTypeSerializer
 
 
 class HotelsView(APIView):
@@ -307,4 +307,72 @@ class HotelsView(APIView):
             json_data = JSONRenderer().render(msg)
             return Response(json_data, status=status.HTTP_204_NO_CONTENT)
         except models.Hotels.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+""" Hotels related api ends here """
+
+""" 
+    Vehicle related apis starts here
+"""
+
+
+class VehicleTypeView(viewsets.ModelViewSet):
+    queryset = models.VehicleType.objects.all()
+    serializer_class = serializers.VehicleTypeSerializer
+
+
+class VehicleView(APIView):
+    def get(self, request, pk=None, format=None):
+        try:
+            if pk:
+                try:
+                    vehicle = models.Vehicles.objects.get(VehicleId=pk)
+                    vehicle_serializer = serializers.VehiclesSerializer(
+                        vehicle)
+                    return Response(vehicle_serializer.data, status=200)
+                except models.Vehicles.DoesNotExist:
+                    return Response(status=status.HTTP_404_NOT_FOUND)
+            else:
+                vehicle = models.Vehicles.objects.all()
+                vehicle_serializer = serializers.VehiclesSerializer(
+                    vehicle, many=True)
+                return Response(vehicle_serializer.data, 200)
+        except Exception as e:
+            msg = {'msg': 'Error occured', 'error': e}
+            json_data = JSONRenderer().render(msg)
+            return Response(json_data, status=status.HTTP_400_BAD_REQUEST)
+
+    def post(self, request, format=None):
+        vehicle_serializer = serializers.VehiclesSerializer(
+            data=request.data)
+        if vehicle_serializer.is_valid():
+            vehicle_serializer.save()
+            msg = {'msg': 'Vehicle added successfully'}
+            json_data = JSONRenderer().render(msg)
+            return Response(json_data, status=status.HTTP_200_OK)
+
+        return Response(vehicle_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, pk, format=None):
+        try:
+            vehicle = models.Vehicles.objects.get(VehicleId=pk)
+            vehicle_serializer = serializers.VehiclesSerializer(
+                vehicle, data=request.data, partial=True)
+            if vehicle_serializer.is_valid():
+                vehicle_serializer.save()
+                msg = {'msg': 'Vehicle updated successfully'}
+                json_data = JSONRenderer().render(msg)
+                return Response(json_data, status=status.HTTP_200_OK)
+        except models.Vehicles.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, pk, format=None):
+        try:
+            print("we are in vehicle delete")
+            vehicle = models.Vehicles.objects.get(VehicleId=pk).delete()
+            msg = {'msg': 'Vehicle deleted successfully'}
+            json_data = JSONRenderer().render(msg)
+            return Response(json_data, status=status.HTTP_204_NO_CONTENT)
+        except models.Vehicles.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
