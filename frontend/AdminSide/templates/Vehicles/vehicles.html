@@ -1,0 +1,93 @@
+{% extends 'AdminSide/templates/shared/base.html' %}
+{% block titleBlock %}
+    {{ siteName }}
+{% endblock titleBlock %}
+{% block bodyContent %}
+    <div class="row">
+        <div class="col-12 rounded">
+            <div class="card rounded">
+                <div class="row p-3">
+                    <div class="col-6">
+                        <h2 class="card-title">Vehicles List</h2>
+                    </div>
+                    <div class="col-6">
+                        {% comment %} search box {% endcomment %}
+                        <form class="form-inline float-right"  method="post">
+                            <div class="form-group mx-sm-3 mb-2">
+                                <label for="search" class="sr-only">Search</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="search"
+                                       name="search"
+                                       placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card" style="min-height: 485px">
+                    <div class="card-content table-responsive">
+                        <a href="#" class="col-3 mb-3 ml-auto d-block btn btn-success">Add new Vehicle</a>
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Vehicle Name</th>
+                                    <th scope="col">Vehicle Description</th>
+                                    <th scope="col">Vehicle Type</th>
+                                    <th scope="col">Vehicle Number</th>
+                                    {% comment %} <th>Vehicle Image</th> {% endcomment %}
+                                    <th scope="col">Vehicle Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vehiclesTable">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock bodyContent %}
+    {% block scriptBlock %}
+        <script>
+            $('#vehicles').addClass('active');
+            var vehicles_api_url = "http://127.0.0.1:8000/tms_api/vehicles_api/";
+            $(document).ready(()=>{
+                
+                var getVehicles=()=>{
+                    $.ajax({
+                        url:vehicles_api_url,
+                        type:"GET",
+                        dataType:"json",
+                        success:function(data){
+                            console.log(data);
+                            $('#vehiclesTable').empty();
+                            $.each(data,function(index,value){
+                                $('#vehiclesTable').append(`
+                                    <tr>
+                                        <th scope="row">${value.VehicleId}</th>
+                                        <td>${value.VehicleName}</td>
+                                        <td>${value.VehicleDescription}</td>
+                                        <td>${value.VehicleTypeId}</td>
+                                        <td>${value.VehiclePrice}</td>
+                                        <td>${value.vehicle_status}</td>
+                                        <td>
+                                            <a href="#" class="btn btn-primary">Edit</a>
+                                            <a href="#" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                `);
+                            });
+                        },
+                        error:function(error){
+                            console.log(error);
+                        }
+            });
+                }
+                getVehicles();
+            });
+        </script>
+    {% endblock scriptBlock %}

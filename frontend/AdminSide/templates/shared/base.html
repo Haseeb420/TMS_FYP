@@ -1,47 +1,46 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block titleBlock %}{% endblock titleBlock %}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="shortcut icon" href="{% static 'img/favicon1.png' %}" type="image/x-icon">
-    <!--google material icon-->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Icons"
-      rel="stylesheet"
-    />
-
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/custom.css' %}" />
-    {% block cssBlock %}{% endblock cssBlock %}
-  </head>
-  <body>
-    <div class="wrapper">
-      <div class="body-overlay"></div>
-      {% include "AdminSide/templates/shared/sidebar.html" %}
-      <div id="content">
-        {% include "AdminSide/templates/shared/navbar.html" %}
-        <div class="main-content">
-          {% block bodyContent %}{% endblock bodyContent %}
-           {% include "AdminSide/templates/shared/footer.html" %}
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            {% block titleBlock %}
+            {% endblock titleBlock %}
+        </title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        {% comment %} <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" /> {% endcomment %}
+        <link rel="shortcut icon"
+              href="{% static 'img/favicon1.png' %}"
+              type="image/x-icon">
+        <!--google material icon-->
+        <link href="https://fonts.googleapis.com/css2?family=Material+Icons"
+              rel="stylesheet"/>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/custom.css' %}" />
+        {% block cssBlock %}
+        {% endblock cssBlock %}
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="body-overlay"></div>
+            {% include "AdminSide/templates/shared/sidebar.html" %}
+            <div id="content">
+                {% include "AdminSide/templates/shared/navbar.html" %}
+                <div class="main-content">
+                    {% block bodyContent %}
+                    {% endblock bodyContent %}
+                    {% include "AdminSide/templates/shared/footer.html" %}
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-
-    <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-
-    <script type="text/javascript">
+        <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
+        <script src="{% static 'js/popper.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+        <script type="text/javascript">
       $(document).ready(function () {
         $("#sidebarCollapse").on("click", function () {
           $("#sidebar").toggleClass("active");
@@ -52,7 +51,8 @@
           $("#sidebar,.body-overlay").toggleClass("show-nav");
         });
       });
-      {% block scriptBlock %}{% endblock scriptBlock %}
-    </script>
-  </body>
+        </script>
+        {% block scriptBlock %}
+        {% endblock scriptBlock %}
+    </body>
 </html>

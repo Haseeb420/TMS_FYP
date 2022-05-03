@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Royal Travels</title>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+        <link rel="shortcut icon"
+              href="{% static 'img/favicon1.png' %}"
+              type="image/x-icon">
+        <style>
+            body{
+                background-image: url("{% static 'img/Background/bg.jpg' %}");
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            .404Content{
+                border: 1px solid #ccc;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .error-template{
+                padding: 40px 15px;
+                text-align: center;
+            }
+            .error-actions{
+                margin-top:15px;
+                margin-bottom:15px;
+            }
+            .error-actions .btn{
+                margin-right:10px;
+            }
+            .title img{
+                width: 600px;
+                height:200px;
+                    border-radius: 130px 130px;
+    box-shadow: 0px 0px 27px 10px #70959f;
+            }
+        </style>
+    </head>
+    <body class="bg-light">
+        {% comment %} 404 error {% endcomment %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="title my-3">
+                    <img src="{% static 'img/1.png' %}" alt="">
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-4  ">
+                    <div class="error-template">
+                        <h1 class="display-1">404</h1>
+                        <h2 class="display-4">Page not found</h2>
+                        <div class="error-details">Sorry, an error has occured, Requested page not found!</div>
+                        <div class="error-actions">
+                            <a href="{% url 'TMS_AdminPanel:index' %}"
+                               class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
+                        Take Me Home </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

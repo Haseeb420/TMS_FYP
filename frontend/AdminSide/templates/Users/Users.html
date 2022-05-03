@@ -1,197 +1,193 @@
 {% extends 'AdminSide/templates/shared/base.html' %}
 {% block titleBlock %}
-{{siteName}}{% endblock titleBlock %}
-
+    {{ siteName }}
+{% endblock titleBlock %}
 {% block bodyContent %}
-<div class="row">
-  <div class="col-lg-3 col-md-6 col-sm-6">
-    <div class="card card-stats">
-      <div class="card-header">
-        <div class="icon icon-warning">
-          <span class="material-icons">equalizer</span>
+    <div class="row">
+        <div class="col-12 rounded">
+            <div class="card rounded">
+                <div class="row p-3">
+                    <div class="col-6">
+                        <h2 class="card-title">Customers</h2>
+                    </div>
+                    <div class="col-6">
+                        {% comment %} search box {% endcomment %}
+                        <form class="form-inline float-right"  method="post">
+                            <div class="form-group mx-sm-3 mb-2">
+                                <label for="search" class="sr-only">Search</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="search"
+                                       name="search"
+                                       placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card" style="min-height: 485px">
+                    <div class="card-content table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Gender</th>
+                                    <th>Address</th>
+                                    <th>Joining Date</th>
+                                    <th>Account Type</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTable">
+                                <tr>
+                                    <th>1</th>
+                                    <td>Bob Williams</td>
+                                    <td>malik@gmail.com</td>
+                                    <td>$23,566</td>
+                                    <td>USA</td>
+                                    <td>USA</td>
+                                    <td>USA</td>
+                                    <td>
+                                        <a href="#" class="btn btn-sm btn-info"><i class="material-icons">info</i></a>
+                                        <a href="#" class="btn btn-sm btn-danger"><i class="material-icons">delete</i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="card-content">
-        <p class="category"><strong>Visits</strong></p>
-        <h3 class="card-title">70,340</h3>
-      </div>
-      <div class="card-footer">
-        <div class="stats">
-          <i class="material-icons text-info">info</i>
-          <a href="#pablo">See detailed report</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-3 col-md-6 col-sm-6">
-    <div class="card card-stats">
-      <div class="card-header">
-        <div class="icon icon-rose">
-          <span class="material-icons">shopping_cart</span>
-        </div>
-      </div>
-      <div class="card-content">
-        <p class="category"><strong>Orders</strong></p>
-        <h3 class="card-title">102</h3>
-      </div>
-      <div class="card-footer">
-        <div class="stats">
-          <i class="material-icons">local_offer</i> Product-wise sales
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-3 col-md-6 col-sm-6">
-    <div class="card card-stats">
-      <div class="card-header">
-        <div class="icon icon-success">
-          <span class="material-icons"> attach_money </span>
-        </div>
-      </div>
-      <div class="card-content">
-        <p class="category"><strong>Revenue</strong></p>
-        <h3 class="card-title">$23,100</h3>
-      </div>
-      <div class="card-footer">
-        <div class="stats">
-          <i class="material-icons">date_range</i> Weekly sales
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-3 col-md-6 col-sm-6">
-    <div class="card card-stats">
-      <div class="card-header">
-        <div class="icon icon-info">
-          <span class="material-icons"> follow_the_signs </span>
-        </div>
-      </div>
-      <div class="card-content">
-        <p class="category"><strong>Followers</strong></p>
-        <h3 class="card-title">+245</h3>
-      </div>
-      <div class="card-footer">
-        <div class="stats">
-          <i class="material-icons">update</i> Just Updated
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+    {% endblock bodyContent %}
+    {% block scriptBlock %}
+        <script>
+            $('#users').addClass('active');
+        var user_api_url = "http://127.0.0.1:8000/tms_api/users_api/";
+        var account_type_api_url="http://127.0.0.1:8000/tms_api/accout_type_api/";
+        var user_auth_api_url="http://127.0.0.1:8000/tms_api/user_auth_api/";
+            $(document).ready(function () {
+                function getUsersCredentials(){
+                    let users_credentials=[];
+                    $.ajax({
+                        url: user_auth_api_url,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            data=JSON.parse(data);
+                            $.each(data, function (index, object) {
+                                users_credentials.push(object);
+                            });
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        }
+                    });
+                    return users_credentials;
+                }
+                var users_credentials = getUsersCredentials();
+                function getUserEmailById(UserId){
+                    var user_email = "";
+                    $.each(users_credentials, function (index, object) {
+                        if(object.UserId==UserId){
+                            user_email=object.Email;
+                            return user_email;
+                        }
+                    });
+                    return user_email;
+                }
+                function getAccountTypes() {
+                    let account_types=[];
+                                    $.ajax({
+                        url: account_type_api_url,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            $.each(data, function (index, object) {
+                                account_types.push(object);
+                            });
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        }
+                    });
+                    return account_types;
+                }
+                
+                var account_types = getAccountTypes();
+                function getAccountTypeById(id) {
+                    var account_type = "";
+                    for(var i=0;i<account_types.length;i++){
+                        if(account_types[i].AccountsTypeId==id){
+                            account_type=account_types[i].AccountTypeName;
+                            break;
+                        }
+                    }
+                    return account_type;
+                }
+                getUsers();
+                function getUsers() {
+                    $.ajax({
+                    url: user_api_url,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#usersTable').empty();
+                        user_account_type="";
+                        $.each(data, function (index, object) {
+                            $('#usersTable').append(`<tr><td>${object.UserId}</td>
+                                <td>${object.Fname + " " + object.Lname}</td>
+                                <td>${getUserEmailById(object.UserId)}</td>
+                                <td>${object.Gender}</td>
+                                <td>${object.UserDOB}</td>
+                                <td>${object.Address}</td>
+                                <td>${getAccountTypeById(object.AccountTypeId)}</td>
+                                <td>
+                                    <a class="button btn-sm btn-danger" id="btn-${object.UserId}" style="margin-left:8px">
+                                    <i class="fa fa-trash-o"></i></a> 
+                                </td> 
+                                </tr>`);
+                            document.getElementById(`btn-${object.UserId}`).addEventListener("click", () => {
+                                DeleteUserByID(object.UserId); 
+                            });
+                        });
+                    }
+                });
+                }
 
-<div class="row">
-  <div class="col-lg-7 col-md-12">
-    <div class="card" style="min-height: 485px">
-      <div class="card-header card-header-text">
-        <h4 class="card-title">Employees Stats</h4>
-        <p class="category">New employees on 15th December, 2016</p>
-      </div>
-      <div class="card-content table-responsive">
-        <table class="table table-hover">
-          <thead class="text-primary">
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Salary</th>
-              <th>Country</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Bob Williams</td>
-              <td>$23,566</td>
-              <td>USA</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Mike Tyson</td>
-              <td>$10,200</td>
-              <td>Canada</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Tim Sebastian</td>
-              <td>$32,190</td>
-              <td>Netherlands</td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>Philip Morris</td>
-              <td>$31,123</td>
-              <td>Korea, South</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>Minerva Hooper</td>
-              <td>$23,789</td>
-              <td>South Africa</td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>Hulk Hogan</td>
-              <td>$43,120</td>
-              <td>Netherlands</td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td>Angelina Jolie</td>
-              <td>$12,140</td>
-              <td>Australia</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+                function DeleteUserByID(id) {
+                    
+                    var flag=confirm("Are you sure you want to delete this user?");
+                    if(flag){
+                        data={
+                            "id":id
+                        }
+                    $.ajax(
+                        {
+                            url: user_api_url + id,
+                            type: 'DELETE',
+                            dataType: 'json',
+                            contentType: 'application/json',
+                            data: data,
+                            success: function (data) {
+                                alert("User deleted successfully");
+                                getUsers();
+                            },
+                            error: function (data) {
+                                alert("User not deleted");
+                            }
+                        }
+                    );
+                }
+                else{
+                    return;
+                }
 
-  <div class="col-lg-5 col-md-12">
-    <div class="card" style="min-height: 485px">
-      <div class="card-header card-header-text">
-        <h4 class="card-title">Activities</h4>
-      </div>
-      <div class="card-content">
-        <div class="streamline">
-          <div class="sl-item sl-primary">
-            <div class="sl-content">
-              <small class="text-muted">5 mins ago</small>
-              <p>Williams has just joined Project X</p>
-            </div>
-          </div>
-          <div class="sl-item sl-danger">
-            <div class="sl-content">
-              <small class="text-muted">25 mins ago</small>
-              <p>Jane has sent a request for access to the project folder</p>
-            </div>
-          </div>
-          <div class="sl-item sl-success">
-            <div class="sl-content">
-              <small class="text-muted">40 mins ago</small>
-              <p>Kate added you to her team</p>
-            </div>
-          </div>
-          <div class="sl-item">
-            <div class="sl-content">
-              <small class="text-muted">45 minutes ago</small>
-              <p>John has finished his task</p>
-            </div>
-          </div>
-          <div class="sl-item sl-warning">
-            <div class="sl-content">
-              <small class="text-muted">55 mins ago</small>
-              <p>Jim shared a folder with you</p>
-            </div>
-          </div>
-          <div class="sl-item">
-            <div class="sl-content">
-              <small class="text-muted">60 minutes ago</small>
-              <p>John has finished his task</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+                }
+            });
 
-{% endblock bodyContent %}
+        </script>
+    {% endblock scriptBlock %}

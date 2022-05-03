@@ -1,0 +1,119 @@
+{% extends 'AdminSide/templates/shared/base.html' %}
+{% block titleBlock %}
+    {{ siteName }}
+{% endblock titleBlock %}
+{% block bodyContent %}
+    <div class="row">
+        <div class="col-12 rounded">
+            <div class="card rounded">
+                <div class="row p-3">
+                    <div class="col-8 mx-auto">
+                        <h2 class="card-title text-center">Add Accounts Types</h2>
+                        <hr />
+                    </div>
+                </div>
+                <div class="col-6 mx-auto">
+                    <div class="card" style="min-height: 485px">
+                        <div class="card-content table-responsive">
+                            <div class="form-group mt-5">
+                                <label for="typeName">Enter Account Type Name</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="typeName"
+                                       placeholder="Enter type name "/>
+                                <p id="typeError">
+                                </p>
+                            </div>
+                            <button id="add_btn" onclick="addNewAccountType()" class="btn btn-primary">Add Account Type</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endblock bodyContent %}
+        {% block scriptBlock %}
+            <script>
+        $('#users').addClass('active');
+        var account_type_api_url="http://127.0.0.1:8000/tms_api/accout_type_api/";
+        $(document).ready(function () {
+            
+            var account_types=getAccountType();
+            $('#typeName').keyup(function () {
+                var typeName=$('#typeName').val();
+                if(typeName.length===0){
+                    $('#typeName').removeClass('is-valid');
+                    $('#typeName').addClass('is-invalid');
+                    $("#typeError").html("<span class='text-danger'>Account type name is required</span>");
+                    $("#add_btn").attr("disabled", true);
+                    
+                }else if(checkTypeExist(typeName)){
+                    $('#typeName').removeClass('is-valid');
+                    $('#typeName').addClass('is-invalid');
+                    $("#typeError").html("<span class='text-danger'>Account type name already exist</span>");
+                    $("#add_btn").attr("disabled", true);
+                }
+                else{
+                    $('#typeName').removeClass('is-invalid');
+                    $('#typeName').addClass('is-valid');
+                     $("#typeError").html("");
+                     $("#add_btn").attr("disabled", false);
+                }
+            });
+            
+            function checkTypeExist(typeName){
+                var typeExist=false;
+                $.each(account_types, function (index, AccountTypeObj) {
+                   
+                       if(AccountTypeObj.AccountTypeName && AccountTypeObj.AccountTypeName.toLowerCase()===typeName.toLowerCase()){
+                           typeExist= true;
+                       }
+                });
+                return typeExist;
+            }
+            function getAccountType() {
+                let account_types=[];
+                $.ajax({
+                    url: account_type_api_url,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        $.each(data, function (index, value) {
+                            account_types.push(value);
+                        });
+                        
+                    },
+                    error: function (data) {
+                        console.log('Error:', data);
+                    }
+                });
+                return account_types;
+            }
+        });
+        function addNewAccountType(){
+                let typeName=$('#typeName').val();
+                if (typeName.length===0){
+                   $('#typeName').removeClass('is-valid');
+                    $('#typeName').addClass('is-invalid');
+                    $("#typeError").html("<span class='text-danger'>Account type name is required</span>");
+                    $("#add_btn").attr("disabled", true);
+                }
+                else{
+                    let data={
+                        "AccountTypeName":typeName
+                    };
+                    $.ajax({
+                        url:account_type_api_url,
+                        type:"POST",
+                        data:JSON.stringify(data),
+                        contentType:"application/json",
+                        success:function (response) {
+                                window.location.href="{% url 'TMS_AdminPanel:manage_accounts_Types' %}";
+                        },
+                        error:function (error) {
+                            console.log(error);
+                        }
+                    });
+
+                }
+            }
+            </script>
+        {% endblock scriptBlock %}

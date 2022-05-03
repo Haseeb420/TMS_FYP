@@ -4,18 +4,32 @@ from django.views.generic import TemplateView
 # Create your views here.
 
 _SiteName = "-Royal Travels"
+_404Page = "AdminSide/templates/shared/404.html"
 
 
-class IndexView(TemplateView):
+class DashboardView(TemplateView):
     template_name = 'AdminSide/templates/AdminUI/index.html'
 
     def get(self, request):
-        return render(request, self.template_name, {'siteName': "Dashboard"+_SiteName})
+        try:
+            return render(request, self.template_name, {'siteName': "Dashboard"+_SiteName})
+        except:
+            return render(request, _404Page, {'siteName': "Dashboard"+_SiteName})
 
 
-""""
-     All Packages views are start from here
-"""
+class AccountsTypeView(TemplateView):
+    template_name = 'AdminSide/templates/Accounts/AccountsType.html'
+
+    def get(self, request):
+        return render(request, self.template_name, {'siteName': "Accounts Type"+_SiteName})
+
+
+class AddAccountsTypeView(TemplateView):
+    template_name = 'AdminSide/templates/Accounts/AddAccountsType.html'
+
+    def get(self, request):
+        return render(request, self.template_name, {'siteName': "Accounts Type"+_SiteName})
+
 
 """
 Packages List view code start from here
@@ -87,34 +101,6 @@ All users views code ends here
 """
 
 
-class ProductView(View):
-    template_name = "AdminSide/templates/product_list.html"
-
-    def get(self, request):
-        return render(request, self.template_name)
-
-
-class AddProductView(View):
-    template_name = "AdminSide/templates/add_product.html"
-
-    def get(self, request):
-        return render(request, self.template_name)
-
-
-class EditProductView(View):
-    template_name = "AdminSide/templates/edit_product.html"
-
-    def get(self, request):
-        return render(request, self.template_name)
-
-
-class DashboardView(View):
-    template_name = "AdminSide/templates/dashboard.html"
-
-    def get(self, request):
-        return render(request, self.template_name)
-
-
 class Add_VehicleOwnerView(View):
     template_name = "AdminSide/templates/Vehicle_Owners/add_vehicleOwner.html"
 
@@ -151,10 +137,11 @@ class Show_VehicleOwnerView(View):
 
 
 class ViewVehicles(View):
-    template_name = "AdminSide/templates/Vehicles/vehicle_list.html"
+    template_name = "AdminSide/templates/Vehicles/vehicles.html"
+    _title = "Vehicles"+_SiteName
 
     def get(self, request):
-        return render(request, self.template_name)
+        return render(request, self.template_name, {'siteName': self._title})
 
 
 class Add_HotelView(View):

@@ -1,0 +1,72 @@
+<script>
+    $('#users').addClass('active');
+    $(document).ready(function () {
+        var account_type_api_url = "http://127.0.0.1:8000/tms_api/accout_type_api/";
+        function getAccountTypes() {
+            $.ajax({
+                url: account_type_api_url,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    alert(data);
+                    $.each(data, function (index, object) {
+                        $("#accountTypeTable").append(
+                            '<tr>' +
+                            '<td>' + object.AccountsTypeId + '</td>' +
+                            '<td>' + object.AccountTypeName + '</td>' +
+                            '<td>' +
+                            `<a href="#" class="btn btn-sm btn-info" id="btn-${object.AccountsTypeId}_delete"><i class="material-icons">info</i></a>` +
+                            `<a href="#" class="btn btn-sm btn-danger" id="btn-${object.AccountsTypeId}_details"><i class="material-icons">delete</i></a>` +
+                            '</td>' +
+                            '</tr>'
+                        );
+                        document.getElementById(`btn-${object.AccountsTypeId}_delete`).addEventListener("click", () => {
+                            DeleteAccountTypeByID(object.AccountsTypeId);
+                        });
+                        document.getElementById(`btn-${object.AccountsTypeId}_details`).addEventListener("click", () => {
+                            DeleteAccountTypeByID(object.AccountsTypeId);
+                        });
+
+                    });
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+            return account_types;
+        }
+    });
+    function DeleteAccountTypeByID(id) {
+
+        var flag = confirm("Are you sure you want to delete this Account Type?");
+        if (flag) {
+            data = {
+                "id": id
+            }
+            $.ajax(
+                {
+                    url: account_type_api_url + id,
+                    type: 'DELETE',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: data,
+                    success: function (data) {
+                        alert("Account Type deleted successfully");
+                        getUsers();
+                    },
+                    error: function (data) {
+                        alert("Account Type not deleted");
+                    }
+                }
+            );
+        }
+        else {
+            return;
+        }
+
+    }
+    });
+
+
+</script>

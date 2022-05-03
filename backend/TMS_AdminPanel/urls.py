@@ -8,7 +8,7 @@ from .views import *
 app_name = 'TMS_AdminPanel'
 urlpatterns = [
     # path("",TemplateView.as_view(template_name='AdminSide/index.html')),
-    path("", IndexView.as_view(), name="index"),
+    path("", DashboardView.as_view(), name="index"),
 
 
     # packages views urls starts from here
@@ -35,6 +35,10 @@ urlpatterns = [
 
     # users views url start here
     path("manage-users", ManageUsers.as_view(), name="manage-users"),
+    path("manage_accounts_Types", AccountsTypeView.as_view(),
+         name="manage_accounts_Types"),
+    path("add_accounts_Types", AddAccountsTypeView.as_view(),
+         name="add_accounts_Types"),
     # users views url end here
 
 
@@ -50,9 +54,7 @@ urlpatterns = [
 
 
 
-    path("manage-products", ProductView.as_view(), name="manage-products"),
-    path("add-products", AddProductView.as_view(), name="add-products"),
-    path("edit-products", EditProductView.as_view(), name="edit-products"),
+
     path("dashboard", DashboardView.as_view(), name="dashboard"),
 
     path("add_VehicleOwner", Add_VehicleOwnerView.as_view(),
