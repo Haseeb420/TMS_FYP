@@ -29,7 +29,10 @@
             <div class="col-12">
                 <div class="card" style="min-height: 485px">
                     <div class="card-content table-responsive">
-                        <a href="#" class="col-3 mb-3 ml-auto d-block btn btn-success">Add new Vehicle</a>
+                        <a href="#"
+                           class="col-3 mb-3 ml-auto d-block btn btn-success"
+                           data-toggle="modal"
+                           data-target="#AddVehicleModal">Add new Vehicle</a>
                         <table class="table table-bordered table-hover">
                             <thead class="thead-dark">
                                 <tr>
@@ -50,14 +53,147 @@
                 </div>
             </div>
         </div>
+        {% comment %} delete propmt modal code starts here {% endcomment %}
+        <div class="modal fade"
+             id="deleteModal"
+             tabindex="-1"
+             role="dialog"
+             aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Are you Sure?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">you want to delete this vehicle</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" id="deleteModel-btn">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% comment %} delete modal code ends here {% endcomment %}
+        {% comment %} Add vehicle modal code starts here {% endcomment %}
+        <div class="modal fade"
+             id="AddVehicleModal"
+             tabindex="-1"
+             role="dialog"
+             aria-labelledby="AddVehicleModal"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add New Vehicle</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-dark">
+                        <form>
+                            <div class="row px-2 my-3">
+                                <div class="col">
+                                    <label class="h5" for="VehicleNameField">Vehicle Name</label>
+                                    <input type="text"
+                                           id="VehicleNameField"
+                                           class="form-control"
+                                           placeholder="Vehicle Name">
+                                </div>
+                                <div class="col">
+                                    <label class="h5" for="vehicleTypeSelect">Vehicle Type</label>
+                                    <select class="custom-select" id="vehicleTypeSelect">
+                                        <option selected>
+                                            Select Vehicle Type
+                                        </option>
+                                        <option value="1">
+                                            One
+                                        </option>
+                                        <option value="2">
+                                            Two
+                                        </option>
+                                        <option value="3">
+                                            Three
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row px-2">
+                                <div class="col">
+                                    <label for="vehiclePriceField" class="h5">Price Per Hour</label>
+                                    <input type="number"
+                                           class="form-control"
+                                           id="vehiclePriceField"
+                                           placeholder="Vehicle Price per Hour">
+                                </div>
+                                <div class="col">
+                                    <label for="VehicleNumberField" class="h5">Vehicle Number</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="VehicleNumberField"
+                                           placeholder="Vehicle Number">
+                                </div>
+                            </div>
+                            <div class="row px-2 my-2">
+                                <div class="col">
+                                    <label class="h5" for="vehicleDescriptionField">Description</label>
+                                    <textarea name="vehicleDescriptionField"
+                                              id="vehicleDescriptionField"
+                                              class="form-control"
+                                              rows="5"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success">Add New Vehicle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% comment %} Add vehicle modal code starts here {% endcomment %}
     {% endblock bodyContent %}
     {% block scriptBlock %}
         <script>
             $('#vehicles').addClass('active');
             var vehicles_api_url = "http://127.0.0.1:8000/tms_api/vehicles_api/";
+            var vehicles_type_api_url="http://127.0.0.1:8000/tms_api/vehicle_type_api/";
             $(document).ready(()=>{
+                getVehicles();
                 
-                var getVehicles=()=>{
+            });
+            var vehicleTypes=getVehiclesType();
+            var getVehicleTypeById=(id)=>{
+                var typeName="";
+                $.each(users_credentials, function (index, object) {
+                        if(object.VehicleTypeId===id){
+                            typeName=object.VehicleTypeName;
+                            return typeName;
+                        }
+                    });
+                    return typeName;
+            }
+            var getVehiclesType=()=>{
+                let vehiclesType=[];
+                $.ajax({
+                        url:vehicles_type_api_url,
+                        type:"GET",
+                        dataType:"json",
+                        success:function(data){
+                            $('#vehiclesTable').empty();
+                            $.each(data,function(index,value){
+                                vehiclesType.push(value);
+                        })},
+                        error:function(error){
+                            console.log(error);
+                        }
+            });
+            return vehiclesType;
+            }
+var getVehicles=()=>{
                     $.ajax({
                         url:vehicles_api_url,
                         type:"GET",
@@ -71,15 +207,22 @@
                                         <th scope="row">${value.VehicleId}</th>
                                         <td>${value.VehicleName}</td>
                                         <td>${value.VehicleDescription}</td>
-                                        <td>${value.VehicleTypeId}</td>
+                                        <td>${getVehicleTypeById(value.VehicleTypeId)}</td>
                                         <td>${value.VehiclePrice}</td>
                                         <td>${value.vehicle_status}</td>
                                         <td>
-                                            <a href="#" class="btn btn-primary">Edit</a>
-                                            <a href="#" class="btn btn-danger">Delete</a>
+                                            <a href="#" id="btn-edit-${value.VehicleId}" class="btn btn-primary">Edit</a>
+                                            <a href="#" id="btn-delete-${value.VehicleId}" class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                 `);
+                                document.getElementById(`btn-edit-${value.VehicleId}`).addEventListener('click',function(){
+                                    $('#AddVehicleModal').modal('show');
+                                });
+                                document.getElementById(`btn-delete-${value.VehicleId}`).addEventListener('click',function(){
+                                    confirmDeleteModal(value.VehicleId);
+                                });
+
                             });
                         },
                         error:function(error){
@@ -87,7 +230,26 @@
                         }
             });
                 }
-                getVehicles();
-            });
+            function deleteVehicle(id){
+         $.ajax({
+                    url:vehicles_api_url+id,
+                    type:"DELETE",
+                    dataType:"json",
+                    success:function(data){
+                        console.log(data);
+                        getVehicles();
+                    },
+                    error:function(error){
+                        console.log(error);
+                    }
+                }); 
+            }
+            function confirmDeleteModal(id){
+    $('#deleteModal').modal();
+	$('#deleteModel-btn').click(function(){
+        deleteVehicle(id);
+        $('#deleteModal').modal('hide');
+    });
+    } 
         </script>
     {% endblock scriptBlock %}
