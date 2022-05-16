@@ -336,8 +336,8 @@ class VehicleView(APIView):
                 vehicle_serializer = serializers.VehiclesSerializer(
                     vehicle, many=True)
                 return Response(vehicle_serializer.data, 200)
-        except Exception as e:
-            msg = {'msg': 'Error occured', 'error': e}
+        except:
+            msg = {'msg': 'Error occured'}
             json_data = JSONRenderer().render(msg)
             return Response(json_data, status=status.HTTP_400_BAD_REQUEST)
 

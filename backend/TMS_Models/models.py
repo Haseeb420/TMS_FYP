@@ -96,6 +96,7 @@ class Rooms(models.Model):
     RoomDescription = models.CharField(max_length=511, null=True)
     RoomPicture = models.ImageField(upload_to="rooms_profile")
     HotelId = ForeignKey(Hotels, on_delete=models.CASCADE)
+    IsAvailable = models.BooleanField(default=True)
 
 
 class HotelBill(models.Model):
@@ -133,10 +134,12 @@ class VehicleType(models.Model):
 class Vehicles(models.Model):
     VehicleId = models.AutoField(primary_key=True)
     VehicleName = models.CharField(max_length=255, null=True)
-    VehicleTypeId = ForeignKey(VehicleType, on_delete=models.CASCADE)
+    VehicleTypeId = ForeignKey(
+        VehicleType, null=True, on_delete=models.CASCADE)
     VehiclePrice = models.IntegerField(null=True)
     VehicleDescription = models.CharField(max_length=511, null=True)
     VehiclePicture = models.ImageField(upload_to="vehicles_profile")
+    Is_available = models.BooleanField(default=True)
 
 
 class VehicleBill(models.Model):

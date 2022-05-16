@@ -146,8 +146,8 @@
                                 <td>${object.Address}</td>
                                 <td>${getAccountTypeById(object.AccountTypeId)}</td>
                                 <td>
-                                    <a class="button btn-sm btn-danger" id="btn-${object.UserId}" style="margin-left:8px">
-                                    <i class="fa fa-trash-o"></i></a> 
+    
+                                    <a id="btn-${object.UserId}" class="btn text-white btn-sm btn-danger"><i class="material-icons">delete</i></a>
                                 </td> 
                                 </tr>`);
                             document.getElementById(`btn-${object.UserId}`).addEventListener("click", () => {
