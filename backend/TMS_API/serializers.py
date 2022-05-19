@@ -1,3 +1,4 @@
+from asyncore import read
 from rest_framework import serializers
 from TMS_Models import models
 
@@ -5,23 +6,26 @@ from TMS_Models import models
 User related serializers starts here
 """
 
+class UserAuthSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.UserAuth
+        fields = '__all__'
 
 class UsersSerializer(serializers.ModelSerializer):
+    credentials=UserAuthSerializer(many=True,read_only=True)
     class Meta:
         model = models.Users
         fields = '__all__'
 
 
 class AccountsTypeSerializer(serializers.ModelSerializer):
+    user_type=serializers.StringRelatedField(many=True,read_only=True)
     class Meta:
         model = models.AccountsType
         fields = '__all__'
 
 
-class UserAuthSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.UserAuth
-        fields = '__all__'
+
 
 
 """

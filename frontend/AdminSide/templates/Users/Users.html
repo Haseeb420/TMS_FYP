@@ -43,20 +43,7 @@
                                 </tr>
                             </thead>
                             <tbody id="usersTable">
-                                <tr>
-                                    <th>1</th>
-                                    <td>Bob Williams</td>
-                                    <td>malik@gmail.com</td>
-                                    <td>$23,566</td>
-                                    <td>USA</td>
-                                    <td>USA</td>
-                                    <td>USA</td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-info"><i class="material-icons">info</i></a>
-                                        <a href="#" class="btn btn-sm btn-danger"><i class="material-icons">delete</i></a>
-                                    </td>
-                                </tr>
-                            </tbody>
+                                </tbody>
                         </table>
                     </div>
                 </div>
@@ -68,8 +55,7 @@
             $('#users').addClass('active');
         var user_api_url = "http://127.0.0.1:8000/tms_api/users_api/";
         var account_type_api_url="http://127.0.0.1:8000/tms_api/accout_type_api/";
-        var user_auth_api_url="http://127.0.0.1:8000/tms_api/user_auth_api/";
-            $(document).ready(function () {
+           $(document).ready(function () {
                 function getUsersCredentials(){
                     let users_credentials=[];
                     $.ajax({
@@ -87,17 +73,6 @@
                         }
                     });
                     return users_credentials;
-                }
-                var users_credentials = getUsersCredentials();
-                function getUserEmailById(UserId){
-                    var user_email = "";
-                    $.each(users_credentials, function (index, object) {
-                        if(object.UserId==UserId){
-                            user_email=object.Email;
-                            return user_email;
-                        }
-                    });
-                    return user_email;
                 }
                 function getAccountTypes() {
                     let account_types=[];
@@ -140,7 +115,7 @@
                         $.each(data, function (index, object) {
                             $('#usersTable').append(`<tr><td>${object.UserId}</td>
                                 <td>${object.Fname + " " + object.Lname}</td>
-                                <td>${getUserEmailById(object.UserId)}</td>
+                                <td>${object.credentials[0].Email}</td>
                                 <td>${object.Gender}</td>
                                 <td>${object.UserDOB}</td>
                                 <td>${object.Address}</td>

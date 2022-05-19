@@ -1,7 +1,5 @@
-from distutils.command.upload import upload
 from django.db import models
 from django.db.models.fields import DateField
-from datetime import date
 
 from django.db.models.fields.related import ForeignKey
 # Create your models here.
@@ -17,15 +15,20 @@ class AccountsType(models.Model):
 
 
 class Users(models.Model):
+    gender_choice={
+        ('M','Male'),
+        ('F','Female'),
+        ('O',"Other"),
+    }
     UserId = models.AutoField(primary_key=True)
     Fname = models.CharField(max_length=255, null=True)
     Lname = models.CharField(max_length=255, null=True)
-    Gender = models.CharField(max_length=50, null=True)
+    Gender = models.CharField(max_length=50,choices=gender_choice, null=True)
     UserDOB = models.DateField(null=True)
     Address = models.CharField(max_length=511, null=True)
     Picture = models.ImageField(upload_to="users_profile")
     AccountTypeId = models.ForeignKey(
-        AccountsType, on_delete=models.CASCADE, null=True)
+        AccountsType, on_delete=models.CASCADE, null=True,related_name="user_type")
 
 
 class UserAuth(models.Model):
@@ -34,7 +37,7 @@ class UserAuth(models.Model):
     Password = models.CharField(max_length=255, null=True)
     JoinnigDate = DateField(null=True)
     user_saltkey = models.CharField(max_length=255, null=True)
-    UserId = ForeignKey(Users, on_delete=models.CASCADE)
+    UserId = ForeignKey(Users, on_delete=models.CASCADE,related_name="credentials")
 
 
 """
