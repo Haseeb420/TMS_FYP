@@ -36,7 +36,7 @@
         var account_type_api_url="http://127.0.0.1:8000/tms_api/accout_type_api/";
         $(document).ready(function () {
             
-            var account_types=getAccountType();
+            var account_types=getAccountTypeList();
             $('#typeName').keyup(function () {
                 var typeName=$('#typeName').val();
                 if(typeName.length===0){
@@ -69,7 +69,7 @@
                 });
                 return typeExist;
             }
-            function getAccountType() {
+            function getAccountTypeList() {
                 let account_types=[];
                 $.ajax({
                     url: account_type_api_url,
@@ -87,7 +87,7 @@
                 });
                 return account_types;
             }
-        });
+        
         function addNewAccountType(){
                 let typeName=$('#typeName').val();
                 if (typeName.length===0){
@@ -115,5 +115,7 @@
 
                 }
             }
+       
+
             </script>
         {% endblock scriptBlock %}

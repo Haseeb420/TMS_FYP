@@ -69,3 +69,6 @@ class ViewVehicles(TemplateView):
 
     def get(self, request):
         return render(request, self.template_name, {'siteName': self._title})
+
+class HotelsView(TemplateView):
+    template_name=""

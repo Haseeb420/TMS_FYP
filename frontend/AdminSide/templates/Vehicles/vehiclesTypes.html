@@ -4,6 +4,16 @@
 {% endblock titleBlock %}
 {% block bodyContent %}
     <div class="row">
+        <div class="col-6 mx-auto d-none" id="delete-alert">
+              <div class="alert alert-danger alert-dismissible fade show">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Vehicle Type Delete Successfully.</strong>  </div>
+        </div>
+        <div class="col-6 mx-auto d-none" id="add-alert">
+              <div class="alert alert-success alert-dismissible fade show">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>New Vehicle Type Added Successfully.</strong>  </div>
+        </div>
         <div class="col-12 rounded">
             <div class="card rounded">
                 <div class="row p-3">
@@ -48,7 +58,12 @@
                 </div>
             </div>
         </div>
+
+
+
+        
         {% comment %} delete propmt modal code starts here {% endcomment %}
+        
         <div class="modal fade"
              id="deleteModal"
              tabindex="-1"
@@ -103,7 +118,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" id="addType" class="btn btn-success">Add New Vehicle</button>
+                        <button type="button" id="addType" onclick="addVehicleType()" class="btn btn-success">Add New Vehicle</button>
                     </div>
                 </div>
             </div>
@@ -112,10 +127,11 @@
     {% endblock bodyContent %}
     {% block scriptBlock %}
         <script>
-            $('#vehicles').addClass('active');
+             $('#vehicles').addClass('active');
             var vehicles_type_api_url="http://127.0.0.1:8000/tms_api/vehicle_type_api/";
             $(document).ready(()=>{
                 getVehicles();
+                
                 
             });
             $("#VehicleTypeName").keyup(function(){
@@ -140,8 +156,6 @@
             function checkTypeExist(){
                 var type=$("#VehicleTypeName").val();
                 for (var i = 0; i < vehicleTypes.length; i++) {
-                    console.log(vehicleTypes[i].VehicleTypeName);
-                    console.log(type);
                     if(vehicleTypes[i].VehicleTypeName==type){
                         return true;
                     }
@@ -154,7 +168,6 @@
                     type:"GET",
                     dataType:"json",
                     success:function(data){
-                        console.log(data);
                         $('#vehiclesTypesTable').empty();
                         $.each(data,function(index,value){
                             $('#vehiclesTypesTable').append(`
@@ -164,13 +177,30 @@
                                     <td>
                                         <a href="#"
                                            class="btn btn-danger"
-                                           data-toggle="modal"
-                                           data-target="#deleteModal"
-                                           data-id="${value.id}"
-                                           data-name="${value.vehicle_type_name}">Delete</a>
+                                           id="delete-btn-${value.VehicleTypeId}">Delete</a>
                                     </td>
                                 </tr>
                             `);
+                            //add event listener on click to confirmDeleteModal
+                            $("#delete-btn-"+value.VehicleTypeId).click(function(){
+                                $("#deleteModal").modal("show");
+                                $("#deleteModel-btn").click(function(){
+                                    $.ajax({
+                                        url:vehicles_type_api_url+value.VehicleTypeId,
+                                        type:"DELETE",
+                                        dataType:"json",
+                                        success:function(data){
+                                            $("#deleteModal").modal("hide");
+                                            $('#delete-alert').removeClass("d-none");
+                                            setTimeout(()=>{
+           
+                                                $('#delete-alert').addClass("d-none");
+                                            },3000);
+                                            getVehicles();
+                                        }
+                                    });
+                                });
+                            });
                         });
                     },
                     error:function(error){
@@ -187,6 +217,28 @@
                         }
                     });
                     return typeName;
+            }
+            function addVehicleType(){
+                var typeName=$("#VehicleTypeName").val();
+                $.ajax({
+                    url:vehicles_type_api_url,
+                    type:"POST",
+                    dataType:"json",
+                    data:{
+                        VehicleTypeName:typeName
+                    },
+                    success:function(data){
+                        $("#AddVehicleModal").modal("hide");
+                        $('#add-alert').removeClass("d-none");
+                        setTimeout(()=>{
+                            $('#add-alert').addClass("d-none");
+                        },3000);
+                        getVehicles();
+                    },
+                    error:function(error){
+                        console.log(error);
+                    }
+                });
             }
             function getVehiclesType(){
                 let vehiclesType=[];
@@ -211,7 +263,6 @@
                     type:"DELETE",
                     dataType:"json",
                     success:function(data){
-                        console.log(data);
                         getVehicles();
                     },
                     error:function(error){
@@ -220,6 +271,7 @@
                 }); 
             }
             function confirmDeleteModal(id){
+                console.log(id);
     $('#deleteModal').modal();
 	$('#deleteModel-btn').click(function(){
         deleteVehicle(id);
