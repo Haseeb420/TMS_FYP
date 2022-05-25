@@ -93,63 +93,79 @@
                         </button>
                     </div>
                     <div class="modal-body text-dark">
-                        <form>
-                            <div class="row px-2 my-3">
-                                <div class="col">
-                                    <label class="h5" for="VehicleNameField">Vehicle Name</label>
-                                    <input type="text"
-                                           id="VehicleNameField"
-                                           class="form-control"
-                                           placeholder="Vehicle Name">
-                                </div>
-                                <div class="col">
-                                    <label class="h5" for="vehicleTypeSelect">Vehicle Type</label>
-                                    <select class="custom-select" id="vehicleTypeSelect">
-                                        <option selected>
-                                            Select Vehicle Type
-                                        </option>
-                                        <option value="1">
-                                            One
-                                        </option>
-                                        <option value="2">
-                                            Two
-                                        </option>
-                                        <option value="3">
-                                            Three
-                                        </option>
-                                    </select>
-                                </div>
+                        <div class="row px-2 my-3">
+                            <div class="col">
+                                <label class="h5" for="VehicleNameField">Vehicle Name</label>
+                                <input type="text"
+                                       id="VehicleNameField"
+                                       class="form-control"
+                                       placeholder="Vehicle Name">
                             </div>
-                            <div class="row px-2">
-                                <div class="col">
-                                    <label for="vehiclePriceField" class="h5">Price Per Hour</label>
-                                    <input type="number"
-                                           class="form-control"
-                                           id="vehiclePriceField"
-                                           placeholder="Vehicle Price per Hour">
-                                </div>
-                                <div class="col">
-                                    <label for="VehicleNumberField" class="h5">Vehicle Number</label>
-                                    <input type="text"
-                                           class="form-control"
-                                           id="VehicleNumberField"
-                                           placeholder="Vehicle Number">
-                                </div>
+                            <div class="col">
+                                <label class="h5" for="vehicleTypeSelect">Vehicle Type</label>
+                                <select class="custom-select"
+                                        id="vehicleTypeSelect"
+                                        placeholder="Select Vehicle Type ">
+                                    <option value="1">
+                                        One
+                                    </option>
+                                    <option value="2">
+                                        Two
+                                    </option>
+                                    <option value="3">
+                                        Three
+                                    </option>
+                                </select>
                             </div>
-                            <div class="row px-2 my-2">
-                                <div class="col">
-                                    <label class="h5" for="vehicleDescriptionField">Description</label>
-                                    <textarea name="vehicleDescriptionField"
-                                              id="vehicleDescriptionField"
-                                              class="form-control"
-                                              rows="5"></textarea>
-                                </div>
+                        </div>
+                        <div class="row px-2">
+                            <div class="col">
+                                <label for="vehiclePriceField" class="h5">Price Per Hour</label>
+                                <input type="number"
+                                       class="form-control"
+                                       id="vehiclePriceField"
+                                       placeholder="Vehicle Price per Hour">
                             </div>
-                        </form>
+                            <div class="col">
+                                <label for="VehicleNumberField" class="h5">Vehicle Number</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="VehicleNumberField"
+                                       placeholder="Vehicle Number">
+                            </div>
+                        </div>
+                        <div class="row px-2 my-2">
+                            <div class="col">
+                                <label class="h5" for="vehicleDescriptionField">Description</label>
+                                <textarea name="vehicleDescriptionField"
+                                          id="vehicleDescriptionField"
+                                          class="form-control"
+                                          rows="5"></textarea>
+                            </div>
+                        </div>
+                        <div class="row px-2 my-2">
+                            <div class="col">
+                                <label class="h5" for="vehicle_image">Vehicle Image</label>
+                                <input type="file"
+                                       name="vehicle_image"
+                                       class="form-control"
+                                       id="vehicle_image"
+                                       accept="image/*"/>
+                            </div>
+                            <div class="col">
+                                <input type="checkbox"
+                                       name="vehicle_image"
+                                       class="form-control"
+                                       id="vehicle_image"
+                                       accept="image/*"/>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success">Add New Vehicle</button>
+                        <button type="button" class="btn btn-success" onclick="addNewVehicle()">
+                            Add New Vehicle
+                        </button>
                     </div>
                 </div>
             </div>
@@ -163,9 +179,52 @@
             var vehicles_type_api_url="http://127.0.0.1:8000/tms_api/vehicle_type_api/";
             $(document).ready(()=>{
                 getVehicles();
+                vehicleTypeSelectOptions();
                 
             });
+            var vehicleTypeSelectOptions=()=>{
+                $("#vehicleTypeSelect").empty();
+                $.ajax({
+                    url:vehicles_type_api_url,
+                    type:"GET",
+                    dataType:"json",
+                    success:function(data){
+                        $.each(data,function(index,value){
+                            $('#vehicleTypeSelect').append(`<option value="${value.VehicleTypeId}">${value.VehicleTypeName}</option>`);
+                        });
+                    }
+                });
+            }
+            var addNewVehicle=()=>{
+                var vehicleName=$('#VehicleNameField').val();
+                var vehicleType=$('#vehicleTypeSelect').val();
+                var vehiclePrice=$('#vehiclePriceField').val();
+                var vehicleNumber=$('#VehicleNumberField').val();
+                var vehicleDescription=$('#vehicleDescriptionField').val();
+                var vehicleImage=$('#vehicle_image').val();
+                var formData=new FormData();
+                formData.append('vehicle_name',vehicleName);
+                formData.append('vehicle_type',vehicleType);
+                formData.append('vehicle_price',vehiclePrice);
+                formData.append('vehicle_number',vehicleNumber);
+                formData.append('vehicle_description',vehicleDescription);
+                formData.append('vehicle_image',vehicleImage);
+                $.ajax({
+                    url:vehicles_api_url,
+                    type:'POST',
+                    data:formData,
+                    processData:false,
+                    contentType:false,
+                    success:function(data){
+                        if(data.status=='success'){
+                            $('#AddVehicleModal').modal('hide');
+                            getVehicles();
+                        }
+                    }
+                });
+            };
             var vehicleTypes=getVehiclesType();
+            console.log(vehicleTypes);
             var getVehicleTypeById=(id)=>{
                 var typeName="";
                 $.each(users_credentials, function (index, object) {

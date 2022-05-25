@@ -126,7 +126,6 @@ class UserAuthView(APIView):
                     data = {
                         "UserAuthId": i.UserAuthId,
                         "Email": i.Email,
-                        "JoinnigDate": i.JoinnigDate,
                         "UserId": i.UserId.UserId,
                     }
                     users.append(data)
@@ -252,8 +251,8 @@ Hotels related apis starts here
 
 
 class HotelsTypeView(viewsets.ModelViewSet):
-    queryset = models.Hotels.objects.all()
-    serializer_class = serializers.HotelSerializer
+    queryset = models.HotelsType.objects.all()
+    serializer_class = serializers.HotelsTypeSerializer
 
 
 class HotelsView(APIView):
@@ -278,6 +277,8 @@ class HotelsView(APIView):
             return Response(json_data, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, format=None):
+        print(request.data)
+        print(request.method)
         hotel_serializer = serializers.HotelSerializer(
             data=request.data)
         if hotel_serializer.is_valid():
@@ -296,7 +297,7 @@ class HotelsView(APIView):
                 hotel_serializer.save()
                 msg = {'msg': 'Hotel updated successfully'}
                 json_data = JSONRenderer().render(msg)
-                return Response(json_data, 200)
+                return Response(json_data, status=status.HTTP_200_OK)
         except models.Hotels.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 

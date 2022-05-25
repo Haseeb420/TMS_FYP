@@ -43,7 +43,7 @@
                                 </tr>
                             </thead>
                             <tbody id="usersTable">
-                                </tbody>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -56,24 +56,6 @@
         var user_api_url = "http://127.0.0.1:8000/tms_api/users_api/";
         var account_type_api_url="http://127.0.0.1:8000/tms_api/accout_type_api/";
            $(document).ready(function () {
-                function getUsersCredentials(){
-                    let users_credentials=[];
-                    $.ajax({
-                        url: user_auth_api_url,
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function (data) {
-                            data=JSON.parse(data);
-                            $.each(data, function (index, object) {
-                                users_credentials.push(object);
-                            });
-                        },
-                        error: function (data) {
-                            console.log(data);
-                        }
-                    });
-                    return users_credentials;
-                }
                 function getAccountTypes() {
                     let account_types=[];
                                     $.ajax({
@@ -81,6 +63,7 @@
                         type: 'GET',
                         dataType: 'json',
                         success: function (data) {
+                            console.log(data);
                             $.each(data, function (index, object) {
                                 account_types.push(object);
                             });
@@ -95,7 +78,10 @@
                 var account_types = getAccountTypes();
                 function getAccountTypeById(id) {
                     var account_type = "";
+                    console.log(id);
                     for(var i=0;i<account_types.length;i++){
+                    console.log(account_types[i].AccountsTypeId);
+
                         if(account_types[i].AccountsTypeId==id){
                             account_type=account_types[i].AccountTypeName;
                             break;
@@ -110,16 +96,18 @@
                     type: 'GET',
                     dataType: 'json',
                     success: function (data) {
+                        console.log(data);
                         $('#usersTable').empty();
                         user_account_type="";
                         $.each(data, function (index, object) {
+                        
                             $('#usersTable').append(`<tr><td>${object.UserId}</td>
                                 <td>${object.Fname + " " + object.Lname}</td>
                                 <td>${object.credentials[0].Email}</td>
-                                <td>${object.Gender}</td>
+                                <td>${object.Gender==='M'?'Male':object.Gender=='F'?'Female':"Other"}</td>
                                 <td>${object.UserDOB}</td>
                                 <td>${object.Address}</td>
-                                <td>${getAccountTypeById(object.AccountTypeId)}</td>
+                                <td>${getAccountTypeById(object.AccountsTypeId)}</td>
                                 <td>
     
                                     <a id="btn-${object.UserId}" class="btn text-white btn-sm btn-danger"><i class="material-icons">delete</i></a>

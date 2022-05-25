@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
+    'rest_framework',
     'TMS_Views.apps.TmsViewsConfig',
     'TMS_Models.apps.TmsModelsConfig',
     'TMS_AdminPanel.apps.TmsAdminpanelConfig',
@@ -150,17 +151,8 @@ MEDIA_ROOT = BASE_DIR / 'images/'
 
 MEDIA_URL = '/user-media/'
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_RENDERER_CLASSES': (
-#         'rest_framework.renderers.JSONRenderer',
-#     ),
-# }
 
-# CORRECT_ANSWER_POINTS = 1
-# CORS_ALLOWED_ORIGINS = [
-#     'http://localhost:3000',
-
-# ]
-
-
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHISHLIST = [
+    'http://127.0.0.1:3000/',
+]

@@ -23,4 +23,5 @@ urlpatterns = [
     path('tms_api/', include("TMS_API.urls")),
     path('', include("TMS_Views.urls")),
 
-]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

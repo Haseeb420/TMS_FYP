@@ -6,26 +6,27 @@ from TMS_Models import models
 User related serializers starts here
 """
 
+
 class UserAuthSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.UserAuth
         fields = '__all__'
 
+
 class UsersSerializer(serializers.ModelSerializer):
-    credentials=UserAuthSerializer(many=True,read_only=True)
+    credentials = UserAuthSerializer(many=True, read_only=True)
+
     class Meta:
         model = models.Users
         fields = '__all__'
 
 
 class AccountsTypeSerializer(serializers.ModelSerializer):
-    user_type=serializers.StringRelatedField(many=True,read_only=True)
+    user_type = serializers.StringRelatedField(many=True, read_only=True)
+
     class Meta:
         model = models.AccountsType
         fields = '__all__'
-
-
-
 
 
 """
@@ -57,12 +58,16 @@ class CountrySerializer(serializers.ModelSerializer):
 
 
 class StateSerializer(serializers.ModelSerializer):
+    countries = CountrySerializer(many=True, read_only=True)
+
     class Meta:
         model = models.State
         fields = '__all__'
 
 
 class CitySerializer(serializers.ModelSerializer):
+    states = StateSerializer(many=True, read_only=True)
+
     class Meta:
         model = models.City
         fields = '__all__'
