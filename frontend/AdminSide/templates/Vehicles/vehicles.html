@@ -188,6 +188,9 @@
                     url:vehicles_type_api_url,
                     type:"GET",
                     dataType:"json",
+                        dataType: 'json',headers: {
+                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                                                },
                     success:function(data){
                         $.each(data,function(index,value){
                             $('#vehicleTypeSelect').append(`<option value="${value.VehicleTypeId}">${value.VehicleTypeName}</option>`);
@@ -212,6 +215,10 @@
                 $.ajax({
                     url:vehicles_api_url,
                     type:'POST',
+                    
+                        dataType: 'json',headers: {
+                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                                                },
                     data:formData,
                     processData:false,
                     contentType:false,
@@ -240,6 +247,10 @@
                 $.ajax({
                         url:vehicles_type_api_url,
                         type:"GET",
+                        
+                        dataType: 'json',headers: {
+                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                                                },
                         dataType:"json",
                         success:function(data){
                             $('#vehiclesTable').empty();
@@ -257,6 +268,9 @@ var getVehicles=()=>{
                         url:vehicles_api_url,
                         type:"GET",
                         dataType:"json",
+                        dataType: 'json',headers: {
+                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                                                },
                         success:function(data){
                             console.log(data);
                             $('#vehiclesTable').empty();
@@ -293,6 +307,10 @@ var getVehicles=()=>{
          $.ajax({
                     url:vehicles_api_url+id,
                     type:"DELETE",
+                    
+                        dataType: 'json',headers: {
+                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                                                },
                     dataType:"json",
                     success:function(data){
                         console.log(data);

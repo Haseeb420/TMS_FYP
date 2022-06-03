@@ -51,25 +51,25 @@ class PackagesTypeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CountrySerializer(serializers.ModelSerializer):
+class CitySerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Country
+        model = models.City
         fields = '__all__'
 
 
 class StateSerializer(serializers.ModelSerializer):
-    countries = CountrySerializer(many=True, read_only=True)
+    cities = CitySerializer(many=True, read_only=True)
 
     class Meta:
         model = models.State
         fields = '__all__'
 
 
-class CitySerializer(serializers.ModelSerializer):
+class CountrySerializer(serializers.ModelSerializer):
     states = StateSerializer(many=True, read_only=True)
 
     class Meta:
-        model = models.City
+        model = models.Country
         fields = '__all__'
 
 

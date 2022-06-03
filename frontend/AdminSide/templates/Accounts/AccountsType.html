@@ -137,6 +137,10 @@
                         $.ajax({
                             url: account_type_api_url,
                             type: 'GET',
+                            
+                        dataType: 'json',headers: {
+                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                                                },
                             dataType: 'json',
                             success: function (data) {
                                 $.each(data, function (index, object) {
@@ -158,6 +162,10 @@
                                                 url: account_type_api_url + object.AccountsTypeId + "/",
                                                 type: 'DELETE',
                                                 dataType: 'json',
+                                                
+                        dataType: 'json',headers: {
+                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                                                },
                                                 success: function (data) {
                                                     $("#deleteModal").modal('hide');
                                                     
@@ -225,6 +233,10 @@
                         $.ajax({
                             url: account_type_api_url,
                             type: 'GET',
+                            
+                        dataType: 'json',headers: {
+                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                                                },
                             dataType: 'json',
                             success: function (data) {
                                 $.each(data, function (index, value) {
@@ -253,6 +265,10 @@
                         $.ajax({
                             url: account_type_api_url,
                             type: "POST",
+                        dataType: 'json',
+                        headers: {
+                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                                                },
                             data: JSON.stringify(data),
                             contentType: "application/json",
                             success: function (response) {

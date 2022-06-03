@@ -16,8 +16,11 @@ class LoginView(View):
     _title = "Login"+_SiteName
 
     def get(self, request, *args, **kwargs):
-        login_form = LoginForm()
-        return render(request, self.template_name, {"siteName": self._title, "login_form": login_form, 'error': kwargs.get('error')})
+        if 'user_id' in request.session and request.session['account_type_id'] == 1:
+            return HttpResponseRedirect(reverse('TMS_AdminPanel:dashboard'))
+        else:
+            login_form = LoginForm()
+            return render(request, self.template_name, {"siteName": self._title, "login_form": login_form, 'error': kwargs.get('error')})
 
     def post(self, request):
         login_form = LoginForm(request.POST)

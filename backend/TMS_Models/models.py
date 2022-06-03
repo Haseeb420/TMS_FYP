@@ -35,8 +35,7 @@ class UserAuth(models.Model):
     UserAuthId = models.AutoField(primary_key=True)
     Email = models.EmailField(max_length=255, null=True, unique=True)
     Password = models.CharField(max_length=255, null=True)
-    JoinnigDate = DateField(null=True)
-    user_saltkey = models.CharField(max_length=255, null=True)
+    JoinnigDate = DateField(null=True, auto_now_add=True)
     UserId = ForeignKey(Users, on_delete=models.CASCADE,
                         related_name="credentials")
 
@@ -58,13 +57,15 @@ class Country(models.Model):
 class State(models.Model):
     StateId = models.AutoField(primary_key=True)
     StateName = models.CharField(max_length=255, null=True)
-    CountryId = ForeignKey(Country, on_delete=models.CASCADE,related_name="countries")
+    CountryId = ForeignKey(
+        Country, on_delete=models.CASCADE, related_name="states")
 
 
 class City(models.Model):
     CityId = models.AutoField(primary_key=True)
     CityName = models.CharField(max_length=255, null=True)
-    StateId = ForeignKey(State, on_delete=models.CASCADE,related_name="states")
+    StateId = ForeignKey(State, on_delete=models.CASCADE,
+                         related_name="cities")
 
 
 """ 
@@ -203,7 +204,6 @@ class Payment(models.Model):
     PaymentId = models.AutoField(primary_key=True)
     PaymentDate = DateField(null=True)
     PaymentAmount = models.IntegerField(null=True)
-    # PaymentStatus = models.CharField(max_length=255, null=True) make it true after payment
     PaymentStatus = models.BooleanField(default=False)
     PaymentUserId = ForeignKey(Users, on_delete=models.CASCADE)
     PaymentBookingId = ForeignKey(Booking, on_delete=models.CASCADE)

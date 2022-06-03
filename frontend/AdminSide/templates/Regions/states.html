@@ -7,20 +7,20 @@
         <div class="col-6 mx-auto d-none" id="delete-alert">
             <div class="alert alert-danger alert-dismissible fade show">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Country  Deleted Successfully.</strong>
+                <strong>State Deleted Successfully.</strong>
             </div>
         </div>
         <div class="col-6 mx-auto d-none" id="add-alert">
             <div class="alert alert-success alert-dismissible fade show">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>New Country Added Successfully.</strong>
+                <strong>New State Added Successfully.</strong>
             </div>
         </div>
         <div class="col-12 rounded">
             <div class="card rounded">
                 <div class="row p-3">
                     <div class="col-6">
-                        <h2 class="card-title">Countries</h2>
+                        <h2 class="card-title">States</h2>
                     </div>
                     <div class="col-6">
                         {% comment %} search box {% endcomment %}
@@ -45,19 +45,20 @@
                         <a type="button"
                            class="btn btn-success text-white d-block ml-auto col-2 mr-3 my-2"
                            data-toggle="modal"
-                           data-target="#addAccountTypeModal">
-                            Add Country
+                           data-target="#addStateModal">
+                            Add New State
                         </a>
                         <div class="card-content table-responsive">
                             <table class="table table-bordered text-center table-hover">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th scope="col">ID</th>
+                                        <th scope="col">State Name</th>
                                         <th scope="col">Country Name</th>
                                         <th scope="col">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="countries_table">
+                                <tbody id="state_table">
                                 </tbody>
                             </table>
                         </div>
@@ -78,7 +79,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">you want to delete this Country?</div>
+                        <div class="modal-body">you want to delete this State?</div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-danger" id="deleteModel-btn">Delete</button>
@@ -87,27 +88,43 @@
                 </div>
             </div>
             <div class="modal fade"
-                 id="addAccountTypeModal"
+                 id="addStateModal"
                  tabindex="-1"
                  role="dialog"
-                 aria-labelledby="addCountryModalLabel"
+                 aria-labelledby="addstateModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="addCountryModalLabel">Add New Country</h5>
+                            <h5 class="modal-title" id="addstateModalLabel">Add New State</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="accountType">Country Name</label>
+                                <label for="accountType">State Name</label>
                                 <input type="text"
                                        class="form-control"
-                                       id="countryName"
-                                       name="countryName"
-                                       placeholder="Enter New Account Type">
+                                       id="StateName"
+                                       name="StateName"
+                                       placeholder="Enter New state name">
+                            </div>
+                            <label class="h5" for="countriesSelect">Country Name</label>
+                            <div class="form-group">
+                                <select class="custom-select"
+                                        id="countriesSelect"
+                                        placeholder="Select Country">
+                                    <option value="1">
+                                        One
+                                    </option>
+                                    <option value="2">
+                                        Two
+                                    </option>
+                                    <option value="3">
+                                        Three
+                                    </option>
+                                </select>
                             </div>
                             <span id="typeError"></span>
                         </div>
@@ -115,10 +132,10 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="button"
                                     class="btn btn-primary"
-                                    onclick="addNewAccountType()"
+                                    onclick="AddNewState()"
                                     id="add_btn">
-                                Add Account
-                                Type
+                                Add
+                                State
                             </button>
                         </div>
                     </div>
@@ -126,157 +143,249 @@
             {% endblock bodyContent %}
             {% block scriptBlock %}
                 <script>
-                $('#users').addClass('active');
-                var country_api_url = "http://127.0.0.1:8000/tms_api/state/";
-                $(document).ready(function () {
-                    getCountries();
-                });
-                function getCountries() {
-                        $("#countries_table").html("");
-                        $.ajax({
-                            url: country_api_url,
-                            type: 'GET',
-                            dataType: 'json',
-                            success: function (data) {
-                                console.log(data);
-                                $.each(data, function (index, object) {
-                                
-                                    $("#countries_table").append(
-                                        '<tr>' +
-                                        '<th scope="row">' + object.CountryId + '</th>' +
-                                        '<td>' + object.CountryName + '</td>' +
-                                        '<td>' +
-                                            `<a href="#" class="btn btn-danger" id="delete-btn-${object.CountryId}"><i class="material-icons">delete</i></a>`+
-                                       '</td>' +
-                                        '</tr>'
-                                    );
-                                    //delete model confirmDeleteModal
-                                    $("#delete-btn-" + object.CountryId).click(function () {
-                                        $("#deleteModal").modal('show');
-                                        $("#deleteModel-btn").click(function () {
-                                            $.ajax({
-                                                url: country_api_url + object.CountryId + "/",
-                                                type: 'DELETE',
-                                                dataType: 'json',
-                                                success: function (data) {
-                                                    $("#deleteModal").modal('hide');
-                                                    
-                                                    $("#delete-alert").removeClass('d-none');
-                                                    setTimeout(function () {
-                                                        $("#delete-alert").addClass('d-none');
-                                                    }, 3000);
-                                                    getCountries();
-                                                },
-                                                error: function (data) {
-                                                    console.log(data);
-                                                }
-                                            });
-                                        });
-                                    });
-                                   
-                          
-                                     
-                                });
-                            },
-                            error: function (data) {
-                                console.log(data);
-                            }
+            $('#region').addClass('active');
+            var state_api_url = "http://127.0.0.1:8000/tms_api/state/";
+            var country_api_url = "http://127.0.0.1:8000/tms_api/country/";
+            $(document).ready(function () {
+                getStates();
+                intializedSelectOption();
+            });
+            function intializedSelectOption() {
+                $("#countriesSelect").empty();
+                $(".custom-select").append("<option value=''>Select Country</option>");
+                $.ajax({
+                    url: country_api_url,
+                    type: 'GET'
+
+                    , headers: {
+                        'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        $.each(data, function (index, value) {
+                            $('#countriesSelect').append('<option value="' + value.CountryId + '">' + value.CountryName + '</option>');
                         });
                     }
+                });
+            }
+            function getStates() {
+                $("#state_table").html("");
+                $.ajax({
+                    url: state_api_url,
+                    type: 'GET',
+                    dataType: 'json',
+                    headers: {
+                        'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        $.each(data, function (index, object) {
+                            let countryName=getCountryNameById(object.CountryId);
+                            $("#state_table").append(
+                                '<tr>' +
+                                '<th scope="row">' + object.StateId + '</th>' +
+                                '<td>' + object.StateName + '</td>' +
+                                `<td class="country-${object.CountryId}">${countryName}</td>` +
+                                '<td>' + 
+                                `<a href="#" class="btn btn-danger" id="delete-btn-${object.StateId}"><i class="material-icons">delete</i></a>` +
+                                '</td>' +
+                                '</tr>'
+                            );
+                            //delete model confirmDeleteModal
+                            $("#delete-btn-" + object.StateId).click(function () {
+                                $("#deleteModal").modal('show');
+                                $("#deleteModel-btn").click(function () {
+                                    $.ajax({
+                                        url: state_api_url + object.StateId + "/",
+                                        type: 'DELETE',
+                                        dataType: 'json'
 
-                    
-                    $('#countryName').keyup(function () {
-                        var countryName = $('#countryName').val();
-                        if (countryName.length === 0) {
-                            $('#countryName').removeClass('is-valid');
-                            $('#countryName').addClass('is-invalid');
-                            $("#typeError").html("<span class='text-danger'>Account type name is required</span>");
-                            $("#add_btn").attr("disabled", true);
+                                        , headers: {
+                                            'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                                        },
+                                        success: function (data) {
+                                            $("#deleteModal").modal('hide');
 
-                        } else if (checkTypeExist(countryName)) {
-                            $('#countryName').removeClass('is-valid');
-                            $('#countryName').addClass('is-invalid');
-                            $("#typeError").html("<span class='text-danger'>Account type name already exist</span>");
-                            $("#add_btn").attr("disabled", true);
-                        }
-                        else {
-                            $('#countryName').removeClass('is-invalid');
-                            $('#countryName').addClass('is-valid');
-                            $("#typeError").html("");
-                            $("#add_btn").attr("disabled", false);
+                                            $("#delete-alert").removeClass('d-none');
+                                            setTimeout(function () {
+                                                $("#delete-alert").addClass('d-none');
+                                            }, 3000);
+                                            getStates();
+                                        },
+                                        error: function (data) {
+                                            console.log(data);
+                                        }
+                                    });
+                                });
+                            });
+
+
+
+                        });
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+            }
+
+
+            $('#StateName').keyup(function () {
+                var StateName = $('#StateName').val();
+                if (StateName.length === 0) {
+                    $('#StateName').removeClass('is-valid');
+                    $('#StateName').addClass('is-invalid');
+                    $("#typeError").html("<span class='text-danger'>Account type name is required</span>");
+                    $("#add_btn").attr("disabled", true);
+
+                } else if (checkTypeExist(StateName)) {
+                    $('#StateName').removeClass('is-valid');
+                    $('#StateName').addClass('is-invalid');
+                    $("#typeError").html("<span class='text-danger'>Account type name already exist</span>");
+                    $("#add_btn").attr("disabled", true);
+                }
+                else {
+                    $('#StateName').removeClass('is-invalid');
+                    $('#StateName').addClass('is-valid');
+                    $("#typeError").html("");
+                    $("#add_btn").attr("disabled", false);
+                }
+            });
+
+
+            function getAccountTypeList() {
+
+                let account_types = [];
+                $.ajax({
+                    url: country_api_url,
+                    type: 'GET'
+
+                    , headers: {
+                        'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+
+
+                        $.each(data, function (index, value) {
+                            account_types.push(value);
+                        });
+
+                    },
+                    error: function (data) {
+                        console.log('Error:', data);
+                    }
+                });
+                return account_types;
+            }
+            function checkTypeExist(StateName) {
+                var account_types = getStatesList();
+                var typeExist = false;
+                $.each(account_types, function (index, AccountTypeObj) {
+
+                    if (AccountTypeObj.StateName && AccountTypeObj.StateName.toLowerCase() === StateName.toLowerCase()) {
+                        typeExist = true;
+                    }
+                });
+                return typeExist;
+            }
+            function getStatesList() {
+                let account_types = [];
+                $.ajax({
+                    url: state_api_url,
+                    type: 'GET',
+                    dataType: 'json'
+
+                    , headers: {
+                        'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                    },
+                    success: function (data) {
+                        $.each(data, function (index, value) {
+                            account_types.push(value);
+                        });
+
+                    },
+                    error: function (data) {
+                        console.log('Error:', data);
+                    }
+                });
+                return account_types;
+            }
+            var getCountryNameById = (countryID) => {
+                console.log(countryID);
+                if (countryID) {
+                    var countryName = [];
+                    url = country_api_url + countryID;
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        headers: {
+                            'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                        },
+                        success: function (data) {
+                            countryName = data.CountryName;
+                            $(`.country-${countryID}`).html(countryName);
+                            return 
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
                         }
                     });
-                    
-                        
-
-                    function checkTypeExist(countryName) {
-                        var account_types = getAccountTypeList();
-                        var typeExist = false;
-                        $.each(account_types, function (index, AccountTypeObj) {
-
-                            if (AccountTypeObj.AccountcountryName && AccountTypeObj.AccountcountryName.toLowerCase() === countryName.toLowerCase()) {
-                                typeExist = true;
-                            }
-                        });
-                        return typeExist;
-                    }
-                    function getAccountTypeList() {
-                        let account_types = [];
-                        $.ajax({
-                            url: country_api_url,
-                            type: 'GET',
-                            dataType: 'json',
-                            success: function (data) {
-                                $.each(data, function (index, value) {
-                                    account_types.push(value);
-                                });
-
-                            },
-                            error: function (data) {
-                                console.log('Error:', data);
-                            }
-                        });
-                        return account_types;
-                    }
-                                function addNewAccountType() {
-                    let countryName = $('#countryName').val();
-                    if (countryName.length === 0) {
-                        $('#countryName').removeClass('is-valid');
-                        $('#countryName').addClass('is-invalid');
-                        $("#typeError").html("<span class='text-danger'>Account type name is required</span>");
-                        $("#add_btn").attr("disabled", true);
-                    }
-                    else {
-                        let data = {
-                            "CountryName": countryName
-                        };
-                        $.ajax({
-                            url: country_api_url,
-                            type: "POST",
-                            data: JSON.stringify(data),
-                            contentType: "application/json",
-                            success: function (response) {
-                                $("#addAccountTypeModal").modal("hide");
-                                $('#countryName').val("");
-                                $('#countryName').removeClass('is-invalid');
-                                $('#countryName').addClass('is-valid');
-                                $("#typeError").html("");
-                                $("#add_btn").attr("disabled", false);
-                                $("#add-alert").removeClass("d-none");
-                                getCountries();
-                                
-                                setTimeout(() => {
-                                    $("#add-alert").addClass("d-none");
-                                }, 3000);
-                               
-                            },
-                            error: function (error) {
-                                console.log(error);
-                            }
-                        });
-
-                    }
+                    console.log(countryName);
+                    return countryName;
                 }
+                else {
+                    return " ";
+                }
+                console.log("return ni hua");
+            }
+            function AddNewState() {
+                let StateName = $('#StateName').val();
+                if (StateName.length === 0) {
+                    $('#StateName').removeClass('is-valid');
+                    $('#StateName').addClass('is-invalid');
+                    $("#typeError").html("<span class='text-danger'>Account type name is required</span>");
+                    $("#add_btn").attr("disabled", true);
+                }
+                else {
+                    let country = $('#countriesSelect').val();
+                    let data = {
+                        "StateName": StateName,
+                        "CountryId": Number(country),
+                    };
+                    console.log(data);
+                    $.ajax({
+                        url: state_api_url,
+                        type: "POST",
+                        data: JSON.stringify(data),
+                        contentType: "application/json; charset=utf-8",
+                        headers: {
+                            'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                        },
+                        success: function (response) {
+                            $("#addStateModal").modal("hide");
+                            $('#StateName').val("");
+                            $('#StateName').removeClass('is-invalid');
+                            $('#StateName').addClass('is-valid');
+                            $("#typeError").html("");
+                            $("#add_btn").attr("disabled", false);
+                            $("#add-alert").removeClass("d-none");
+                            getStates();
+
+                            setTimeout(() => {
+                                $("#add-alert").addClass("d-none");
+                            }, 3000);
+
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+
+                }
+            }
 
                 </script>
             {% endblock scriptBlock %}

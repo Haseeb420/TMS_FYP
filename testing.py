@@ -4,8 +4,8 @@ import requests
 from backend.TMS_Models.models import *
 
 # url = "http://localhost:8000/tms_api/country/"
-# url = "http://localhost:8000/tms_api/state/"
-url = "http://localhost:8000/tms_api/city/"
+url = "http://localhost:8000/tms_api/state/"
+# url = "http://localhost:8000/tms_api/city/"
 # url = "http://localhost:8000/tms_api/hotel_type_api/"
 
 
@@ -29,10 +29,11 @@ def post_data(url, data):
 if __name__ == "__main__":
     # # countryName = {'CountryName': 'Pakistan'}
 
-    # data = post_data(url, countryName)
-    country = Country.objects.get(CountryId=1)
-    State = State.objects.filter(CountryId=country)
-    City = {'CityName': 'Lahore', 'StateId': State[0].StateId}
-    data = post_data(url, City)
+    # # data = post_data(url, countryName)
+    # country = Country.objects.get(CountryId=1)
+    # State = State.objects.filter(CountryId=country)
+    # City = {'CityName': 'Lahore', 'StateId': State[0].StateId}
+    stateObj = {"StateName": 'Punjab', "CountryId": 1}
+    data = post_data(url, stateObj)
     data = get_data(url)
     print(data)

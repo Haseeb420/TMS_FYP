@@ -1,14 +1,14 @@
-import json
-from django.shortcuts import render
+
 from TMS_API import serializers
 from TMS_Models import models
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
 from rest_framework import generics, viewsets
-
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from TMS_API.permission import AdminOrReadOnly
 # Create your views here.
 """
 City country state related api starts here
@@ -18,16 +18,22 @@ City country state related api starts here
 class CountryView(viewsets.ModelViewSet):
     queryset = models.Country.objects.all()
     serializer_class = serializers.CountrySerializer
+    permission_classes = (IsAuthenticated, AdminOrReadOnly)
+    authentication_classes = (TokenAuthentication,)
 
 
 class StateView(viewsets.ModelViewSet):
     queryset = models.State.objects.all()
     serializer_class = serializers.StateSerializer
+    permission_classes = (IsAuthenticated, AdminOrReadOnly)
+    authentication_classes = (TokenAuthentication,)
 
 
 class CityView(viewsets.ModelViewSet):
     queryset = models.City.objects.all()
     serializer_class = serializers.CitySerializer
+    permission_classes = (IsAuthenticated, AdminOrReadOnly)
+    authentication_classes = (TokenAuthentication,)
 
 
 """
@@ -45,6 +51,9 @@ Users related apis starts here
 
 
 class UsersView(APIView):
+    permission_classes = (IsAuthenticated, AdminOrReadOnly)
+    authentication_classes = (TokenAuthentication,)
+
     def get(self, request, pk=None, format=None):
         try:
             if pk:
@@ -101,8 +110,14 @@ class AccountsTypeView(viewsets.ModelViewSet):
     queryset = models.AccountsType.objects.all()
     serializer_class = serializers.AccountsTypeSerializer
 
+    permission_classes = (IsAuthenticated, AdminOrReadOnly)
+    authentication_classes = (TokenAuthentication,)
+
 
 class UserAuthView(APIView):
+    permission_classes = (IsAuthenticated, AdminOrReadOnly)
+    authentication_classes = (TokenAuthentication,)
+
     def get(self, request, pk=None, format=None):
         try:
             if pk:
@@ -184,9 +199,15 @@ Packages related apis starts here
 class PackageTypeView(viewsets.ModelViewSet):
     queryset = models.Packages.objects.all()
     serializer_class = serializers.PackagesSerializer
+    permission_classes = (IsAuthenticated, AdminOrReadOnly)
+    authentication_classes = (TokenAuthentication,)
 
 
 class PackageView(APIView):
+
+    permission_classes = (IsAuthenticated, AdminOrReadOnly)
+    authentication_classes = (TokenAuthentication,)
+
     def get(self, request, pk=None, format=None):
         try:
             if pk:
@@ -251,11 +272,17 @@ Hotels related apis starts here
 
 
 class HotelsTypeView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, AdminOrReadOnly)
+    authentication_classes = (TokenAuthentication,)
     queryset = models.HotelsType.objects.all()
     serializer_class = serializers.HotelsTypeSerializer
 
 
 class HotelsView(APIView):
+
+    permission_classes = (IsAuthenticated, AdminOrReadOnly)
+    authentication_classes = (TokenAuthentication,)
+
     def get(self, request, pk=None, format=None):
         try:
             if pk:
@@ -317,11 +344,17 @@ class HotelsView(APIView):
 
 
 class VehicleTypeView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, AdminOrReadOnly)
+    authentication_classes = (TokenAuthentication,)
     queryset = models.VehicleType.objects.all()
     serializer_class = serializers.VehicleTypeSerializer
 
 
 class VehicleView(APIView):
+
+    permission_classes = (IsAuthenticated, AdminOrReadOnly)
+    authentication_classes = (TokenAuthentication,)
+
     def get(self, request, pk=None, format=None):
         try:
             if pk:

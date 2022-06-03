@@ -5,14 +5,16 @@
 {% block bodyContent %}
     <div class="row">
         <div class="col-6 mx-auto d-none" id="delete-alert">
-              <div class="alert alert-danger alert-dismissible fade show">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Vehicle Type Delete Successfully.</strong>  </div>
+            <div class="alert alert-danger alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Vehicle Type Delete Successfully.</strong>
+            </div>
         </div>
         <div class="col-6 mx-auto d-none" id="add-alert">
-              <div class="alert alert-success alert-dismissible fade show">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>New Vehicle Type Added Successfully.</strong>  </div>
+            <div class="alert alert-success alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>New Vehicle Type Added Successfully.</strong>
+            </div>
         </div>
         <div class="col-12 rounded">
             <div class="card rounded">
@@ -58,12 +60,7 @@
                 </div>
             </div>
         </div>
-
-
-
-        
         {% comment %} delete propmt modal code starts here {% endcomment %}
-        
         <div class="modal fade"
              id="deleteModal"
              tabindex="-1"
@@ -118,7 +115,10 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" id="addType" onclick="addVehicleType()" class="btn btn-success">Add New Vehicle</button>
+                        <button type="button"
+                                id="addType"
+                                onclick="addVehicleType()"
+                                class="btn btn-success">Add New Vehicle</button>
                     </div>
                 </div>
             </div>
@@ -166,6 +166,9 @@
                 $.ajax({
                     url:vehicles_type_api_url,
                     type:"GET",
+                        dataType: 'json',headers: {
+                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                                                },
                     dataType:"json",
                     success:function(data){
                         $('#vehiclesTypesTable').empty();
@@ -175,9 +178,7 @@
                                     <td>${value.VehicleTypeId}</td>
                                     <td>${value.VehicleTypeName}</td>
                                     <td>
-                                        <a href="#"
-                                           class="btn btn-danger"
-                                           id="delete-btn-${value.VehicleTypeId}">Delete</a>
+                                        <a href="#" class="btn btn-danger" id="delete-btn-${value.VehicleTypeId}">Delete</a>
                                     </td>
                                 </tr>
                             `);
@@ -188,6 +189,10 @@
                                     $.ajax({
                                         url:vehicles_type_api_url+value.VehicleTypeId,
                                         type:"DELETE",
+                                        
+                        dataType: 'json',headers: {
+                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                                                },
                                         dataType:"json",
                                         success:function(data){
                                             $("#deleteModal").modal("hide");
@@ -224,6 +229,9 @@
                     url:vehicles_type_api_url,
                     type:"POST",
                     dataType:"json",
+                        dataType: 'json',headers: {
+                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                                                },
                     data:{
                         VehicleTypeName:typeName
                     },
@@ -246,6 +254,10 @@
                         url:vehicles_type_api_url,
                         type:"GET",
                         dataType:"json",
+                        
+                        dataType: 'json',headers: {
+                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                                                },
                         success:function(data){
                             $('#vehiclesTable').empty();
                             $.each(data,function(index,value){
@@ -262,6 +274,10 @@
                     url:vehicles_api_url+id,
                     type:"DELETE",
                     dataType:"json",
+                    
+                        dataType: 'json',headers: {
+                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                                                },
                     success:function(data){
                         getVehicles();
                     },

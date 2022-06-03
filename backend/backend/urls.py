@@ -17,9 +17,10 @@ Including another URLconf
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-
+from django.contrib import admin
 urlpatterns = [
-    path('admin/', include("TMS_AdminPanel.urls", namespace="TMS_AdminPanel"),),
+    path('tms/admin/', include("TMS_AdminPanel.urls", namespace="TMS_AdminPanel"),),
+    path('tms/super-admin/', admin.site.urls),
     path('tms_api/', include("TMS_API.urls")),
     path('', include("TMS_Views.urls")),
 

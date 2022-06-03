@@ -29,6 +29,8 @@ urlpatterns = [
 
     # regions related urls start here
     path("countries", CounteriesView.as_view(), name="countries"),
+    path("states", StatesView.as_view(), name="states"),
+    path("cities", CityView.as_view(), name="cities"),
 
     # regions related urls ends here
 

@@ -35,12 +35,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.admin',
     'corsheaders',
     'rest_framework',
     'TMS_Views.apps.TmsViewsConfig',
     'TMS_Models.apps.TmsModelsConfig',
     'TMS_AdminPanel.apps.TmsAdminpanelConfig',
     'TMS_API.apps.TmsApiConfig',
+    'accounts.apps.AccountsConfig',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -125,7 +128,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+
+TIME_ZONE = 'Asia/Karachi'
 
 USE_I18N = True
 
@@ -156,3 +160,16 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHISHLIST = [
     'http://127.0.0.1:3000/',
 ]
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
+REST_FRAME_WORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+        # "rest_framework.authentication.SessionAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",
+    ),
+}
