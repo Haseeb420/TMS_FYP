@@ -1,9 +1,22 @@
 {% extends 'AdminSide/templates/shared/base.html' %}
+{% load crispy_forms_tags %}
 {% block titleBlock %}
     {{ siteName }}
 {% endblock titleBlock %}
 {% block bodyContent %}
     <div class="row">
+        <div class="col-6 mx-auto d-none" id="delete-alert">
+            <div class="alert alert-danger alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Hotel  Deleted Successfully.</strong>
+            </div>
+        </div>
+        <div class="col-6 mx-auto d-none" id="add-alert">
+            <div class="alert alert-success alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>New Hotel Added Successfully.</strong>
+            </div>
+        </div>
         <div class="col-12 rounded">
             <div class="card rounded">
                 <div class="row p-3">
@@ -12,321 +25,355 @@
                     </div>
                     <div class="col-6">
                         {% comment %} search box {% endcomment %}
-                        <form class="form-inline float-right"  method="post">
-                            <div class="form-group mx-sm-3 mb-2">
-                                <label for="search" class="sr-only">Search</label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="search"
-                                       name="search"
-                                       placeholder="Search">
-                            </div>
-                            <button type="submit" class="btn btn-primary mb-2">Search</button>
+                        <div class="form-group mx-sm-3 mb-2">
+                            <label for="search" class="sr-only">Search</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="search"
+                                   name="search"
+                                   placeholder="Search">
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="card" style="min-height: 485px">
-                    <div class="card-content table-responsive">
-                        <a href="#"
-                           class="col-3 mb-3 ml-auto d-block btn btn-success"
-                           data-toggle="modal"
-                           data-target="#AddVehicleModal">Add new Vehicle</a>
-                        <table class="table table-bordered table-hover">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Vehicle Name</th>
-                                    <th scope="col">Vehicle Description</th>
-                                    <th scope="col">Vehicle Type</th>
-                                    <th scope="col">Vehicle Number</th>
-                                    {% comment %} <th>Vehicle Image</th> {% endcomment %}
-                                    <th scope="col">Vehicle Status</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="vehiclesTable">
-                            </tbody>
-                        </table>
+                        <button type="submit" class="btn btn-primary mb-2">Search</button>
                     </div>
                 </div>
             </div>
         </div>
-        {% comment %} delete propmt modal code starts here {% endcomment %}
-        <div class="modal fade"
-             id="deleteModal"
-             tabindex="-1"
-             role="dialog"
-             aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Are you Sure?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">you want to delete this vehicle</div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger" id="deleteModel-btn">Delete</button>
-                    </div>
+        <div class="col-12">
+            <div class="card" style="min-height: 485px">
+                <div class="card-content table-responsive">
+                    <a href="#"
+                       class="col-3 mb-3 ml-auto d-block btn btn-success"
+                       data-toggle="modal"
+                       data-target="#AddVehicleModal">Add new Vehicle</a>
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Vehicle Name</th>
+                                <th scope="col">Vehicle Description</th>
+                                <th scope="col">Vehicle Type</th>
+                                <th scope="col">Vehicle Price/Hour</th>
+                                {% comment %} <th>Vehicle Image</th> {% endcomment %}
+                                <th scope="col">Vehicle Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vehiclesTable">
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        {% comment %} delete modal code ends here {% endcomment %}
-        {% comment %} Add vehicle modal code starts here {% endcomment %}
-        <div class="modal fade"
-             id="AddVehicleModal"
-             tabindex="-1"
-             role="dialog"
-             aria-labelledby="AddVehicleModal"
-             aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add New Vehicle</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+    </div>
+    {% comment %} delete propmt modal code starts here {% endcomment %}
+    <div class="modal fade"
+         id="deleteModal"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Are you Sure?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">you want to delete this vehicle</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="deleteModel-btn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% comment %} delete modal code ends here {% endcomment %}
+    {% comment %} Add vehicle modal code starts here {% endcomment %}
+    <div class="modal fade"
+         id="AddVehicleModal"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="AddVehicleModal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Vehicle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row px-3 py-3">
+                        <div class="col">
+                            <label for="vehicleName">Vehicle Name</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="vehicleName"
+                                   name="vehicleName"
+                                   placeholder="Vehicle Name">
+                        </div>
+                        <div class="col">
+                            <!-- label for vehicle_image-->
+                            <label for="vehicle_image">Vehicle Image</label>
+                            <input type="file"
+                                   class="form-control"
+                                   id="image"
+                                   name="image"
+                                   placeholder="Vehicle Image">
+                        </div>
                     </div>
-                    <div class="modal-body text-dark">
-                        <div class="row px-2 my-3">
-                            <div class="col">
-                                <label class="h5" for="VehicleNameField">Vehicle Name</label>
-                                <input type="text"
-                                       id="VehicleNameField"
-                                       class="form-control"
-                                       placeholder="Vehicle Name">
-                            </div>
-                            <div class="col">
-                                <label class="h5" for="vehicleTypeSelect">Vehicle Type</label>
-                                <select class="custom-select"
-                                        id="vehicleTypeSelect"
-                                        placeholder="Select Vehicle Type ">
-                                    <option value="1">
-                                        One
-                                    </option>
-                                    <option value="2">
-                                        Two
-                                    </option>
-                                    <option value="3">
-                                        Three
-                                    </option>
-                                </select>
-                            </div>
+                    <div class="row px-3 py-3">
+                        <div class="col">
+                            <label for="vehicleTypeId">Vehicle Type</label>
+                            <select id="vehicleTypeId" class="form-control">
+                            </select>
                         </div>
-                        <div class="row px-2">
-                            <div class="col">
-                                <label for="vehiclePriceField" class="h5">Price Per Hour</label>
-                                <input type="number"
-                                       class="form-control"
-                                       id="vehiclePriceField"
-                                       placeholder="Vehicle Price per Hour">
-                            </div>
-                            <div class="col">
-                                <label for="VehicleNumberField" class="h5">Vehicle Number</label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="VehicleNumberField"
-                                       placeholder="Vehicle Number">
-                            </div>
+                        <div class="col">
+                            <label for="vehiclePrice">
+                                Vehicle Price Per Hour
+                            </label>
+                            <input id="vehiclePrice"
+                                   type="number"
+                                   minimum="0"
+                                   name="vehiclePrice"
+                                   placeholder="Price per hour"
+                                   class="form-control"/>
                         </div>
-                        <div class="row px-2 my-2">
-                            <div class="col">
-                                <label class="h5" for="vehicleDescriptionField">Description</label>
-                                <textarea name="vehicleDescriptionField"
-                                          id="vehicleDescriptionField"
-                                          class="form-control"
-                                          rows="5"></textarea>
-                            </div>
+                    </div>
+                    <div class="row px-3 py-3">
+                        <div class="col">
+                            <label for="vehicleDescription">
+                                Vehicle Description
+                            </label>
+                            <textarea class="form-control"
+                                      id="vehicleDescription"
+                                      name="vehicleDescription"
+                                      placeholder="Vehicle Description"></textarea>
                         </div>
-                        <div class="row px-2 my-2">
-                            <div class="col">
-                                <label class="h5" for="vehicle_image">Vehicle Image</label>
-                                <input type="file"
-                                       name="vehicle_image"
-                                       class="form-control"
-                                       id="vehicle_image"
-                                       accept="image/*"/>
-                            </div>
-                            <div class="col">
-                                <input type="checkbox"
-                                       name="vehicle_image"
-                                       class="form-control"
-                                       id="vehicle_image"
-                                       accept="image/*"/>
-                            </div>
+                    </div>
+                    <div class="row px-3 py-3">
+                        <div class="col">
+                            <label for="vehicleStatus">
+                                Vehicle Status
+                            </label>
+                            <input type="checkbox"
+                                   id="vehicleStatus"
+                                   name="vehicleStatus"
+                                   class="form-control-checkbox"
+                                   checked>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success" onclick="addNewVehicle()">
-                            Add New Vehicle
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="button"
+                                class="btn btn-primary"
+                                onclick="addNewVehicle()"
+                                id="add_btn">
+                            Add City
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-        {% comment %} Add vehicle modal code starts here {% endcomment %}
     {% endblock bodyContent %}
     {% block scriptBlock %}
         <script>
-            $('#vehicles').addClass('active');
-            var vehicles_api_url = "http://127.0.0.1:8000/tms_api/vehicles_api/";
-            var vehicles_type_api_url="http://127.0.0.1:8000/tms_api/vehicle_type_api/";
-            $(document).ready(()=>{
+    $('#vehicles').addClass('active');
+    var vehicles_api_url = "http://127.0.0.1:8000/tms_api/vehicles_api/";
+    var vehicles_type_api_url = "http://127.0.0.1:8000/tms_api/vehicle_type_api/";
+    $(document).ready(() => {
+        getVehicles();
+        vehicleTypeSelectOptions();
+
+    });
+    
+    var vehicleTypeSelectOptions = () => {
+        $("#vehicleTypeId").empty();
+        $("#vehicleTypeId").append(`<option value="">Select Vehicle Type</option>`);
+        $.ajax({
+            url: vehicles_type_api_url,
+            type: "GET",
+            dataType: "json",
+            dataType: 'json', headers: {
+                'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+            },
+            success: function (data) {
+                $.each(data, function (index, value) {
+                    $('#vehicleTypeId').append(`<option value="${value.VehicleTypeId}">${value.VehicleTypeName}</option>`);
+                });
+            }
+        });
+    }
+    var addNewVehicle = () => {
+        var vehicleName = $("#vehicleName").val();
+        var vehicleTypeId = $("#vehicleTypeId").val();
+        var vehiclePrice = $("#vehiclePrice").val();
+        var vehicleDescription = $("#vehicleDescription").val();
+        var image = $('#image')[0].files;
+        var vehicleStatus = $("#vehicleStatus").is(":checked");
+        let  data={
+            "VehicleName": vehicleName,
+            "VehicleTypeId": vehicleTypeId,
+            "VehiclePrice": vehiclePrice,
+            "VehicleDescription": vehicleDescription,
+            "VehiclePicture": image[0],
+            "VehicleStatus": vehicleStatus
+        };
+        console.log(data);
+        var formData = new FormData();
+        formData.append('VehicleName', vehicleName);
+        formData.append('VehicleTypeId', vehicleTypeId);
+        formData.append('VehiclePrice', vehiclePrice);
+        formData.append('VehicleDescription', vehicleDescription);
+        formData.append('VehiclePicture', image[0]);
+        formData.append('Is_available', true);
+        console.log(formData);
+        
+        $.ajax({
+            url: vehicles_api_url,
+             type: 'POST',
+                    data: formData,
+              contentType: false,
+              processData: false,
+                    headers: {
+                        "Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+                    },
+            success: function (data) {
                 getVehicles();
-                vehicleTypeSelectOptions();
-                
-            });
-            var vehicleTypeSelectOptions=()=>{
-                $("#vehicleTypeSelect").empty();
-                $.ajax({
-                    url:vehicles_type_api_url,
-                    type:"GET",
-                    dataType:"json",
-                        dataType: 'json',headers: {
-                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
-                                                },
-                    success:function(data){
-                        $.each(data,function(index,value){
-                            $('#vehicleTypeSelect').append(`<option value="${value.VehicleTypeId}">${value.VehicleTypeName}</option>`);
-                        });
-                    }
-                });
+                $("#AddVehicleModal").modal("hide");
+                $("#add-alert").removeClass("d-none");
+                $("#add-alert").addClass("d-block");
+                setTimeout(() => {
+                    $("#add-alert").removeClass("d-block");
+                    $("#add-alert").addClass("d-none");
+                }, 3000);
+            },
+            error: function (data) {
+                console.log(data);
             }
-            var addNewVehicle=()=>{
-                var vehicleName=$('#VehicleNameField').val();
-                var vehicleType=$('#vehicleTypeSelect').val();
-                var vehiclePrice=$('#vehiclePriceField').val();
-                var vehicleNumber=$('#VehicleNumberField').val();
-                var vehicleDescription=$('#vehicleDescriptionField').val();
-                var vehicleImage=$('#vehicle_image').val();
-                var formData=new FormData();
-                formData.append('vehicle_name',vehicleName);
-                formData.append('vehicle_type',vehicleType);
-                formData.append('vehicle_price',vehiclePrice);
-                formData.append('vehicle_number',vehicleNumber);
-                formData.append('vehicle_description',vehicleDescription);
-                formData.append('vehicle_image',vehicleImage);
-                $.ajax({
-                    url:vehicles_api_url,
-                    type:'POST',
-                    
-                        dataType: 'json',headers: {
-                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
-                                                },
-                    data:formData,
-                    processData:false,
-                    contentType:false,
-                    success:function(data){
-                        if(data.status=='success'){
-                            $('#AddVehicleModal').modal('hide');
-                            getVehicles();
-                        }
-                    }
-                });
-            };
-            var vehicleTypes=getVehiclesType();
-            console.log(vehicleTypes);
-            var getVehicleTypeById=(id)=>{
-                var typeName="";
-                $.each(users_credentials, function (index, object) {
-                        if(object.VehicleTypeId===id){
-                            typeName=object.VehicleTypeName;
-                            return typeName;
-                        }
-                    });
-                    return typeName;
+        });
+    }
+    var vehicleTypes = getVehiclesType();
+    console.log(vehicleTypes);
+    var getVehicleTypeById = (id) => {
+        var typeName = "";
+        $.each(vehicleTypes, function (index, object) {
+            if (object.VehicleTypeId === id) {
+                typeName = object.VehicleTypeName;
+                return typeName;
             }
-            function getVehiclesType(){
-                let vehiclesType=[];
-                $.ajax({
-                        url:vehicles_type_api_url,
-                        type:"GET",
-                        
-                        dataType: 'json',headers: {
-                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
-                                                },
-                        dataType:"json",
-                        success:function(data){
-                            $('#vehiclesTable').empty();
-                            $.each(data,function(index,value){
-                                vehiclesType.push(value);
-                        })},
-                        error:function(error){
-                            console.log(error);
-                        }
-            });
-            return vehiclesType;
+        });
+        return typeName;
+    }
+    function getVehiclesType() {
+        let vehiclesType = [];
+        $.ajax({
+            url: vehicles_type_api_url,
+            type: "GET",
+
+            dataType: 'json', headers: {
+                'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+            },
+            dataType: "json",
+            success: function (data) {
+                $('#vehiclesTable').empty();
+                $.each(data, function (index, value) {
+                    vehiclesType.push(value);
+                })
+            },
+            error: function (error) {
+                console.log(error);
             }
-var getVehicles=()=>{
-                    $.ajax({
-                        url:vehicles_api_url,
-                        type:"GET",
-                        dataType:"json",
-                        dataType: 'json',headers: {
-                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
-                                                },
-                        success:function(data){
-                            console.log(data);
-                            $('#vehiclesTable').empty();
-                            $.each(data,function(index,value){
-                                $('#vehiclesTable').append(`
+        });
+        return vehiclesType;
+    }
+    var getVehicles = () => {
+        $.ajax({
+            url: vehicles_api_url,
+            type: "GET",
+            dataType: "json",
+            dataType: 'json', headers: {
+                'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+            },
+            success: function (data) {
+                console.log(data);
+                $('#vehiclesTable').empty();
+                $.each(data, function (index, value) {
+                    $('#vehiclesTable').append(`
                                     <tr>
                                         <th scope="row">${value.VehicleId}</th>
                                         <td>${value.VehicleName}</td>
                                         <td>${value.VehicleDescription}</td>
                                         <td>${getVehicleTypeById(value.VehicleTypeId)}</td>
                                         <td>${value.VehiclePrice}</td>
-                                        <td>${value.vehicle_status}</td>
+                                        <td>${value.Is_available?"Available":"Unavailable"}</td>
                                         <td>
                                             <a href="#" id="btn-edit-${value.VehicleId}" class="btn btn-primary">Edit</a>
                                             <a href="#" id="btn-delete-${value.VehicleId}" class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                 `);
-                                document.getElementById(`btn-edit-${value.VehicleId}`).addEventListener('click',function(){
-                                    $('#AddVehicleModal').modal('show');
-                                });
-                                document.getElementById(`btn-delete-${value.VehicleId}`).addEventListener('click',function(){
-                                    confirmDeleteModal(value.VehicleId);
-                                });
-
-                            });
-                        },
-                        error:function(error){
-                            console.log(error);
-                        }
-            });
-                }
-            function deleteVehicle(id){
-         $.ajax({
-                    url:vehicles_api_url+id,
-                    type:"DELETE",
+                    //delete vehicle
+                    $("#btn-delete-" + value.VehicleId).click(() => {
+                        $.ajax({
+                            url: vehicles_api_url + value.VehicleId,
+                            type: "DELETE",
+                            dataType: "json",
+                            dataType: 'json', headers: {
+                                'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                            },
+                            success: function (data) {
+                                getVehicles();
+                                $("#delete-alert").removeClass("d-none");
+                                $("#delete-alert").addClass("d-block");
+                                setTimeout(() => {
+                                    $("#delete-alert").removeClass("d-block");
+                                    $("#delete-alert").addClass("d-none");
+                                }, 3000);
+                            },
+                            error: function (data) {
+                                console.log(data);
+                            }
+                        });
+                    });
                     
-                        dataType: 'json',headers: {
-                                                    'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
-                                                },
-                    dataType:"json",
-                    success:function(data){
-                        console.log(data);
-                        getVehicles();
-                    },
-                    error:function(error){
-                        console.log(error);
-                    }
-                }); 
+                    
+
+                });
+            },
+            error: function (error) {
+                console.log(error);
             }
-            function confirmDeleteModal(id){
-    $('#deleteModal').modal();
-	$('#deleteModel-btn').click(function(){
-        deleteVehicle(id);
-        $('#deleteModal').modal('hide');
-    });
+        });
+    }
+    function deleteVehicle(id) {
+        $.ajax({
+            url: vehicles_api_url + id,
+            type: "DELETE",
+
+            dataType: 'json', headers: {
+                'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+            },
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                getVehicles();
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+    function confirmDeleteModal(id) {
+        $('#deleteModal').modal();
+        $('#deleteModel-btn').click(function () {
+            deleteVehicle(id);
+            $('#deleteModal').modal('hide');
+        });
     } 
         </script>
     {% endblock scriptBlock %}

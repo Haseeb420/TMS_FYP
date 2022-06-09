@@ -13,7 +13,7 @@ r.register('package_type_api', views.PackageTypeView,
            basename='package_type_api')
 r.register("hotel_type_api", views.HotelsTypeView, basename="hotel_type_api")
 r.register("vehicle_type_api", views.VehicleTypeView,
-           basename="vehicle_type_api")
+           basename="vehicle_type_api"),
 
 urlpatterns = [
     path("", include(r.urls)),

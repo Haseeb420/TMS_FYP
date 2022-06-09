@@ -9,7 +9,7 @@ from rest_framework import generics, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from TMS_API.permission import AdminOrReadOnly
-# Create your views here.
+from TMS_API import forms
 """
 City country state related api starts here
 """
@@ -313,6 +313,7 @@ class HotelsView(APIView):
             msg = {'msg': 'Hotel added successfully'}
             json_data = JSONRenderer().render(msg)
             return Response(json_data, 200)
+        print(hotel_serializer.errors)
         return Response(hotel_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, pk, format=None):
@@ -376,6 +377,8 @@ class VehicleView(APIView):
             return Response(json_data, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, format=None):
+        print(request.data)
+        print(request.method)
         vehicle_serializer = serializers.VehiclesSerializer(
             data=request.data)
         if vehicle_serializer.is_valid():
@@ -383,7 +386,7 @@ class VehicleView(APIView):
             msg = {'msg': 'Vehicle added successfully'}
             json_data = JSONRenderer().render(msg)
             return Response(json_data, status=status.HTTP_200_OK)
-
+        print(vehicle_serializer.errors)
         return Response(vehicle_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, pk, format=None):

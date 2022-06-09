@@ -44,8 +44,9 @@ INSTALLED_APPS = [
     'TMS_API.apps.TmsApiConfig',
     'accounts.apps.AccountsConfig',
     'rest_framework.authtoken',
+    'crispy_forms',
 ]
-
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -172,4 +173,10 @@ REST_FRAME_WORK = {
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.IsAuthenticated",
     ),
+    "DEFAULT_PARSER_CLASSES": (
+        "rest_framework.parsers.JSONParser",
+        "rest_framework.parsers.FormParser",
+        "rest_framework.parsers.MultiPartParser",
+    ),
+
 }

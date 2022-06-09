@@ -137,6 +137,9 @@
                             url: hotel_type_api_url,
                             type: 'GET',
                             dataType: 'json',
+							headers:{
+							"Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+							},
                             success: function (data) {
                                 console.log(data);
                                 $.each(data, function (index, object) {
@@ -157,6 +160,10 @@
                                             $.ajax({
                                                 url: hotel_type_api_url + object.HotelsTypeId + "/",
                                                 type: 'DELETE',
+												
+							headers:{
+							"Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+							},
                                                 dataType: 'json',
                                                 success: function (data) {
                                                     $("#deleteModal").modal('hide');
@@ -224,7 +231,9 @@
                         let hotels_type = [];
                         $.ajax({
                             url: hotel_type_api_url,
-                            type: 'GET',
+                            type: 'GET',headers:{
+							"Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+							},
                             dataType: 'json',
                             success: function (data) {
                                 $.each(data, function (index, value) {
@@ -254,6 +263,9 @@
                             data:{
                                     "HotelsTypeName": typeName,
                                 },
+								headers:{
+							"Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+							},
                             dataType: 'json',
                             
                             success: function (response) {

@@ -2,9 +2,10 @@
 from django.urls import reverse
 from django.shortcuts import render
 from TMS_AdminPanel.forms import LoginForm
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView, View, CreateView
 from TMS_Models import models
 from django.http import HttpResponse, HttpResponseRedirect
+from TMS_API.forms import VehiclesForm
 # Create your views here.
 
 _SiteName = "-Royal Travels"
@@ -118,13 +119,14 @@ class VehicleTypeView(TemplateView):
             return HttpResponseRedirect(reverse('TMS_AdminPanel:index'))
 
 
-class ViewVehicles(TemplateView):
+class ViewVehicles(View):
     template_name = "AdminSide/templates/Vehicles/vehicles.html"
     _title = "Vehicles"+_SiteName
 
     def get(self, request):
         if 'user_id' in request.session and request.session['account_type_id'] == 1:
-            return render(request, self.template_name, {'siteName': self._title})
+            vehicle_form = VehiclesForm()
+            return render(request, self.template_name, {'siteName': self._title, "form": vehicle_form})
         else:
             return HttpResponseRedirect(reverse('TMS_AdminPanel:index'))
 
