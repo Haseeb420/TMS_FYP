@@ -20,6 +20,14 @@ urlpatterns = [
 
     # ---------------------------------------------------------------------------------
 
+    # states by country
+    path("state_by_country/<int:country_id>",
+         views.StateByCountryView.as_view()),
+    path("city_by_state/<int:state_id>",
+         views.CityByStateView.as_view()),
+    path("hotel_by_city/<int:city_id>",
+         views.HotelByCity.as_view()),
+
     # users api urls start here
 
     path("users_api/", include([
@@ -60,6 +68,7 @@ urlpatterns = [
     path("packages_api/", include([
         path("", views.PackageView.as_view()),
         path("<int:pk>/", views.PackageView.as_view()),
+
     ])),
     # Packages api Urls ends here
 

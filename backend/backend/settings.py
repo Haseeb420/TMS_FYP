@@ -157,9 +157,10 @@ MEDIA_ROOT = BASE_DIR / 'images/'
 MEDIA_URL = '/user-media/'
 
 
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHISHLIST = [
     'http://127.0.0.1:3000/',
+    'http://localhost:3000/',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'

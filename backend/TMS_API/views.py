@@ -1,4 +1,6 @@
 
+from pyexpat import model
+from webbrowser import get
 from TMS_API import serializers
 from TMS_Models import models
 from rest_framework.response import Response
@@ -27,6 +29,47 @@ class StateView(viewsets.ModelViewSet):
     serializer_class = serializers.StateSerializer
     permission_classes = (IsAuthenticated, AdminOrReadOnly)
     authentication_classes = (TokenAuthentication,)
+
+
+class StateByCountryView(generics.ListCreateAPIView):
+    serializer_class = serializers.StateSerializer
+    permission_classes = (IsAuthenticated, AdminOrReadOnly)
+    authentication_classes = (TokenAuthentication,)
+
+    def get_queryset(self):
+        country_id = self.kwargs["country_id"]
+        if country_id is not None:
+            country = models.Country.objects.get(CountryId=country_id)
+            # states_list = models.State.objects.filter(CountryId=country)
+
+        return models.State.objects.filter(CountryId=country)
+
+
+class CityByStateView(generics.ListCreateAPIView):
+    serializer_class = serializers.CitySerializer
+    permission_classes = (IsAuthenticated, AdminOrReadOnly)
+    authentication_classes = (TokenAuthentication,)
+
+    def get_queryset(self):
+        state_id = self.kwargs["state_id"]
+        if state_id is not None:
+            state = models.State.objects.get(StateId=state_id)
+            # states_list = models.State.objects.filter(CountryId=country)
+
+        return models.City.objects.filter(StateId=state)
+
+
+class HotelByCity(generics.ListCreateAPIView):
+    serializer_class = serializers.HotelSerializer
+    permission_classes = (IsAuthenticated, AdminOrReadOnly)
+    authentication_classes = (TokenAuthentication,)
+
+    def get_queryset(self):
+        city_id = self.kwargs["city_id"]
+        if city_id is not None:
+            city = models.City.objects.get(CityId=city_id)
+
+        return models.Hotels.objects.filter(HotelCityId=city)
 
 
 class CityView(viewsets.ModelViewSet):
@@ -197,8 +240,8 @@ Packages related apis starts here
 
 
 class PackageTypeView(viewsets.ModelViewSet):
-    queryset = models.Packages.objects.all()
-    serializer_class = serializers.PackagesSerializer
+    queryset = models.PackagesType.objects.all()
+    serializer_class = serializers.PackagesTypeSerializer
     permission_classes = (IsAuthenticated, AdminOrReadOnly)
     authentication_classes = (TokenAuthentication,)
 
@@ -212,14 +255,14 @@ class PackageView(APIView):
         try:
             if pk:
                 try:
-                    package = models.Package.objects.get(PackageId=pk)
+                    package = models.Packages.objects.get(PackageId=pk)
                     package_serializer = serializers.PackagesSerializer(
                         package)
                     return Response(package_serializer.data, status=200)
-                except models.Package.DoesNotExist:
+                except models.Packages.DoesNotExist:
                     return Response(status=status.HTTP_404_NOT_FOUND)
             else:
-                package = models.Package.objects.all()
+                package = models.Packages.objects.all()
                 package_serializer = serializers.PackagesSerializer(
                     package, many=True)
                 return Response(package_serializer.data, 200)
@@ -240,7 +283,7 @@ class PackageView(APIView):
 
     def put(self, request, pk, format=None):
         try:
-            package = models.Package.objects.get(PackageId=pk)
+            package = models.Packages.objects.get(PackageId=pk)
             package_serializer = serializers.PackagesSerializer(
                 package, data=request.data, partial=True)
             if package_serializer.is_valid():
@@ -248,16 +291,16 @@ class PackageView(APIView):
                 msg = {'msg': 'Package updated successfully'}
                 json_data = JSONRenderer().render(msg)
                 return Response(json_data, 200)
-        except models.Package.DoesNotExist:
+        except models.Packages.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def delete(self, request, pk, format=None):
         try:
-            package = models.Package.objects.get(PackageId=pk).delete()
+            package = models.Packages.objects.get(PackageId=pk).delete()
             msg = {'msg': 'Package deleted successfully'}
             json_data = JSONRenderer().render(msg)
             return Response(json_data, status=status.HTTP_204_NO_CONTENT)
-        except models.Package.DoesNotExist:
+        except models.Packages.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 

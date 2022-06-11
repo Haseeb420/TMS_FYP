@@ -6,10 +6,12 @@ from django.views.generic import TemplateView, View, CreateView
 from TMS_Models import models
 from django.http import HttpResponse, HttpResponseRedirect
 from TMS_API.forms import VehiclesForm
+
 # Create your views here.
 
 _SiteName = "-Royal Travels"
 _404Page = "AdminSide/templates/shared/404.html"
+_auth_token = "3e6d228ed10d57a2061861cb109011aca43fb122"
 
 
 class LoginView(View):
@@ -125,8 +127,8 @@ class ViewVehicles(View):
 
     def get(self, request):
         if 'user_id' in request.session and request.session['account_type_id'] == 1:
-            vehicle_form = VehiclesForm()
-            return render(request, self.template_name, {'siteName': self._title, "form": vehicle_form})
+
+            return render(request, self.template_name, {'siteName': self._title})
         else:
             return HttpResponseRedirect(reverse('TMS_AdminPanel:index'))
 
@@ -178,6 +180,28 @@ class StatesView(View):
 class CityView(View):
     template_name = "AdminSide/templates/Regions/cities.html"
     _title = "Cities"+_SiteName
+
+    def get(self, request):
+        if 'user_id' in request.session and request.session['account_type_id'] == 1:
+            return render(request, self.template_name, {'siteName': self._title})
+        else:
+            return HttpResponseRedirect(reverse('TMS_AdminPanel:index'))
+
+
+class PackagesView(TemplateView):
+    template_name = "AdminSide/templates/Packages/packages.html"
+    _title = "Packages"+_SiteName
+
+    def get(self, request):
+        if 'user_id' in request.session and request.session['account_type_id'] == 1:
+            return render(request, self.template_name, {'siteName': self._title})
+        else:
+            return HttpResponseRedirect(reverse('TMS_AdminPanel:index'))
+
+
+class PackagesTypeView(TemplateView):
+    template_name = "AdminSide/templates/Packages/packages_type.html"
+    _title = "Packages Type"+_SiteName
 
     def get(self, request):
         if 'user_id' in request.session and request.session['account_type_id'] == 1:

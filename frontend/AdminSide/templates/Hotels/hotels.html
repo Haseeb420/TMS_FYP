@@ -239,38 +239,23 @@
                                             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editModal">
                                                 Edit
                                             </a>
-                                            <a href="#" id="#delete-btn-${object.HotelId}" class="btn btn-danger">
+                                            <a href="#" id="delete-btn-${object.HotelId}" class="btn btn-danger">
                                                 Delete
                                             </a>`
                             );
-                            //delete model confirmDeleteModal
-                            $("#delete-btn-" + object.HotelId).click(() => {
-                            
-                        $.ajax({
-                            url: hotels_api_url + object.HotelId,
-                            type: "DELETE",
-                            dataType: "json",
-                            dataType: 'json', headers: {
-                                'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
-                            },
-                            success: function (data) {
-                                getVehicles();
-                                $("#delete-alert").removeClass("d-none");
-                                $("#delete-alert").addClass("d-block");
-                                setTimeout(() => {
-                                    $("#delete-alert").removeClass("d-block");
-                                    $("#delete-alert").addClass("d-none");
-                                }, 3000);
-                            },
-                            error: function (data) {
-                                console.log(data);
-                            }
+                            $("#delete-btn-" + object.HotelId).click(function () {
+                                //delete modal confirmation
+                                 $("#deleteModal").modal('show');
+                                 $("#deleteModel-btn").click(function () {
+                                      deleteHotel(object.HotelId);
+                                 });
+
+                               
+                            });
                         });
-                    });
 
 
-
-                        });
+                        
                     },
                     error: function (data) {
                         console.log(data);
@@ -278,6 +263,30 @@
                 });
             }
 
+
+            function deleteHotel(HotelId) {
+                $.ajax({
+                    url: hotels_api_url + HotelId,
+                    type: 'DELETE',
+                    dataType: 'json',
+                    headers: {
+                        "Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+                    },
+                    success: function (data) {
+                        $("#deleteModal").modal('hide');
+                        $("#delete-alert").removeClass("d-none");
+                        $("#delete-alert").addClass("d-block");
+                        setTimeout(3000,function(){
+                            $("#delete-alert").removeClass("d-block");
+                        $("#delete-alert").addClass("d-none");
+                        })
+                        getHotels();
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+            }
 
 function IntializedSelectOptionHotelType(){
     $("#HotelType").empty();
@@ -326,7 +335,7 @@ function IntializedSelectOptionCities(){
 }
 
 
- function getHotelTypesList() {
+function getHotelTypesList() {
                 let account_types = [];
                 $.ajax({
                     url: hotels_type_api_url,

@@ -34,4 +34,9 @@ urlpatterns = [
 
     # regions related urls ends here
 
+    # packages related urls starts here
+    path("packages-list", PackagesView.as_view(), name="packages-list"),
+    path("packages-type", PackagesTypeView.as_view(), name="packages-type"),
+    # packages related urls ends here
+
 ]
