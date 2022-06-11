@@ -39,4 +39,6 @@ urlpatterns = [
     path("packages-type", PackagesTypeView.as_view(), name="packages-type"),
     # packages related urls ends here
 
+    path("manage-slider", ManageSlider.as_view(), name="manage-slider"),
+
 ]

@@ -1,4 +1,5 @@
 from asyncore import read
+from dataclasses import field
 from rest_framework import serializers
 from TMS_Models import models
 
@@ -142,4 +143,10 @@ class InvoiceSerializer(serializers.ModelSerializer):
 class SalesReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.SalesReport
+        fields = '__all__'
+
+
+class ManageSliderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.SliderModel
         fields = '__all__'

@@ -208,3 +208,14 @@ class PackagesTypeView(TemplateView):
             return render(request, self.template_name, {'siteName': self._title})
         else:
             return HttpResponseRedirect(reverse('TMS_AdminPanel:index'))
+
+
+class ManageSlider(TemplateView):
+    template_name = "AdminSide/templates/ManageUI/slider.html"
+    _title = "Manage Slider "+_SiteName
+
+    def get(self, request):
+        if 'user_id' in request.session and request.session['account_type_id'] == 1:
+            return render(request, self.template_name, {'siteName': self._title})
+        else:
+            return HttpResponseRedirect(reverse('TMS_AdminPanel:index'))

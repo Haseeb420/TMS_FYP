@@ -1,3 +1,4 @@
+from distutils.command.upload import upload
 from django.db import models
 from django.db.models.fields import DateField
 
@@ -225,3 +226,8 @@ class SalesReport(models.Model):
     salesStatus = models.CharField(max_length=255, null=True)
     salesUserId = ForeignKey(Users, on_delete=models.CASCADE)
     salesBookingId = ForeignKey(Booking, on_delete=models.CASCADE)
+
+
+class SliderModel(models.Model):
+    SliderId = models.AutoField(primary_key=True)
+    SliderImage = models.ImageField(upload_to="manage_slider")

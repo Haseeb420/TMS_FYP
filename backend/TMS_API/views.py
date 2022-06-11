@@ -394,6 +394,13 @@ class VehicleTypeView(viewsets.ModelViewSet):
     serializer_class = serializers.VehicleTypeSerializer
 
 
+class ManageSliderView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, AdminOrReadOnly)
+    authentication_classes = (TokenAuthentication,)
+    queryset = models.SliderModel.objects.all()
+    serializer_class = serializers.ManageSliderSerializer
+
+
 class VehicleView(APIView):
 
     permission_classes = (IsAuthenticated, AdminOrReadOnly)
