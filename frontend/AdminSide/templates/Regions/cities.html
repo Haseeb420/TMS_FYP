@@ -180,7 +180,7 @@
                         url: city_api_url,
                         type: "GET",
                         headers: {
-                            'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                            'Authorization': 'Token ' + "23fd4d43cc151db137ef652d78f9af390c2a1f91"
                         },
                         dataType: "json",
                         success: function (data) {
@@ -194,10 +194,35 @@
                                     `<td class="states-${value.StateId}">  </td>` +
                                     '<td>' + value.CityName + '</td>' +
                                     '<td>' +
-                                    '<a href="#" class="btn btn-danger" onclick="deleteCity(' + value.id + ')">Delete</a>' +
+                                    `<a href="#" class="btn btn-danger" id="delete-btn-${value.CityId}"><i class="material-icons">delete</i></a>` +
                                     '</td>' +
                                     '</tr>'
                                 );
+                                $("#delete-btn-" + value.CityId).click(function () {
+                                        $("#deleteModal").modal('show');
+                                        $("#deleteModel-btn").click(function () {
+                                            $.ajax({
+                                                url: city_api_url + value.CityId + "/",
+                                                type: 'DELETE',
+                                                headers: {
+                                                    'Authorization': 'Token ' + "23fd4d43cc151db137ef652d78f9af390c2a1f91"
+                                                },
+                                                dataType: 'json',
+                                                success: function (data) {
+                                                    $("#deleteModal").modal('hide');
+                                                    
+                                                    $("#delete-alert").removeClass('d-none');
+                                                    setTimeout(function () {
+                                                        $("#delete-alert").addClass('d-none');
+                                                    }, 3000);
+                                                    getCities();
+                                                },
+                                                error: function (data) {
+                                                    console.log(data);
+                                                }
+                                            });
+                                        });
+                                    });
                             });
                         }
                     });
@@ -212,7 +237,7 @@
                             data:{
                                 cityName:cityName
                             },headers: {
-                            'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                            'Authorization': 'Token ' + "23fd4d43cc151db137ef652d78f9af390c2a1f91"
                         },
                             success: function (data) {
                                 if(data.length>0){
@@ -239,7 +264,7 @@
                         type: "POST",
                         dataType: "json",
                         headers: {
-                            'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                            'Authorization': 'Token ' + "23fd4d43cc151db137ef652d78f9af390c2a1f91"
                         },
                         data:{
                             CityName:cityName,
@@ -260,7 +285,7 @@
                         type: "GET",
                         dataType: "json",
                         headers: {
-                            'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                            'Authorization': 'Token ' + "23fd4d43cc151db137ef652d78f9af390c2a1f91"
                         },
                         
                         success: function (data) {
@@ -282,7 +307,7 @@
                         type: "GET",
                         dataType: "json",
                         headers: {
-                            'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                            'Authorization': 'Token ' + "23fd4d43cc151db137ef652d78f9af390c2a1f91"
                         },
                         
                         success: function (data) {
@@ -309,7 +334,7 @@
                             type: "GET",
                             dataType: "json",
                             headers: {
-                            'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                            'Authorization': 'Token ' + "23fd4d43cc151db137ef652d78f9af390c2a1f91"
                         },
                             success: function (data) {
                                 $.each(data, function (key, value) {
@@ -335,7 +360,7 @@
                         dataType: 'json',
                         contentType: 'application/json',
                         headers: {
-                            'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                            'Authorization': 'Token ' + "23fd4d43cc151db137ef652d78f9af390c2a1f91"
                         },
                         success: function (data) {
                             $(`.country-${stateId}`).html(data.CountryName);
@@ -345,6 +370,8 @@
                             console.log('Error:', data);
                         }
                     });
+
+                    
                 }
                 else {
                     return " ";

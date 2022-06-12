@@ -20,7 +20,7 @@
             <div class="card rounded">
                 <div class="row p-3">
                     <div class="col-6">
-                        <h2 class="card-title">Hotels List</h2>
+                        <h2 class="card-title">Package List</h2>
                     </div>
                     <div class="col-6">
                         {% comment %} search box {% endcomment %}
@@ -46,7 +46,7 @@
                            class="btn btn-success text-white d-block ml-auto col-2 mr-3 my-2"
                            data-toggle="modal"
                            data-target="#addHotelModal">
-                            Add New Hotel
+                            Add New Package
                         </a>
                         <div class="card-content table-responsive">
                             <table class="table table-bordered text-center table-hover">
@@ -97,7 +97,7 @@
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="addHotelModalLabel">Add New Hotel</h5>
+                            <h5 class="modal-title" id="addHotelModalLabel">Add New Package</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -105,7 +105,7 @@
                         <div class="modal-body">
                             <div class="row my-3 px-3">
                                 <div class="col">
-                                    <label for="package_title">Hotel Title</label>
+                                    <label for="package_title">Package Title</label>
                                     <input type="text"
                                            class="form-control"
                                            id="package_title"
@@ -237,7 +237,7 @@
                                     class="btn btn-primary"
                                     onclick="addNewHotel()"
                                     id="add_btn">
-                                Add Hotel
+                                Add Package
                             </button>
                         </div>
                     </div>
@@ -265,7 +265,7 @@
                     type: 'GET',
                     dataType: 'json',
                     headers:{
-							"Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+							"Authorization": "Token 23fd4d43cc151db137ef652d78f9af390c2a1f91"
 							},
                     success: function (data) {
                         console.log(data.PackagesTypeName);
@@ -284,7 +284,7 @@
                         type: "GET",
                         dataType: "json",
                         headers:{
-							"Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+							"Authorization": "Token 23fd4d43cc151db137ef652d78f9af390c2a1f91"
 							},
                         success: function (data) {
                             $("#vehicle").empty();
@@ -304,7 +304,7 @@
                         type: "GET",
                         dataType: "json",
                         headers:{
-							"Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+							"Authorization": "Token 23fd4d43cc151db137ef652d78f9af390c2a1f91"
 							},
                         success: function (data) {
                             $("#state").empty();
@@ -325,7 +325,7 @@
                         type: "GET",
                         dataType: "json",
                         headers:{
-							"Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+							"Authorization": "Token 23fd4d43cc151db137ef652d78f9af390c2a1f91"
 							},
                         success: function (data) {
                             $("#city").empty();
@@ -345,7 +345,7 @@
                         type: "GET",
                         dataType: "json",
                         headers:{
-							"Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+							"Authorization": "Token 23fd4d43cc151db137ef652d78f9af390c2a1f91"
 							},
                         success: function (data) {
                             $("#Hotel").empty();
@@ -365,7 +365,7 @@
                     type: "GET",
                     dataType: "json",
                      headers: {
-                        "Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+                        "Authorization": "Token 23fd4d43cc151db137ef652d78f9af390c2a1f91"
                     },
                     success: function (data) {
                         $.each(data, function (key, value) {
@@ -381,7 +381,7 @@
                     type: 'GET',
                     dataType: 'json',
                     headers: {
-                        "Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+                        "Authorization": "Token 23fd4d43cc151db137ef652d78f9af390c2a1f91"
                     },
                     success: function (data) {
                         $.each(data, function (index, object) {
@@ -409,7 +409,7 @@
                             type: "DELETE",
                             dataType: "json",
                             dataType: 'json', headers: {
-                                'Authorization': 'Token ' + "3e6d228ed10d57a2061861cb109011aca43fb122"
+                                'Authorization': 'Token ' + "23fd4d43cc151db137ef652d78f9af390c2a1f91"
                             },
                             success: function (data) {
                                 getPackages();
@@ -445,7 +445,7 @@ function IntializedSelectOptionHotelType(){
         type: 'GET',
         dataType: 'json',
         headers: {
-            "Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+            "Authorization": "Token 23fd4d43cc151db137ef652d78f9af390c2a1f91"
         },
         success: function (data) {
         $.each(data, function (index, value) {
@@ -467,7 +467,7 @@ function getHotelTypesList() {
                     type: 'GET',
                     dataType: 'json',
                     headers: {
-                        "Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+                        "Authorization": "Token 23fd4d43cc151db137ef652d78f9af390c2a1f91"
                     },
                     success: function (data) {
                         $.each(data, function (index, value) {
@@ -514,7 +514,7 @@ function getHotelTypesList() {
               contentType: false,
               processData: false,
                     headers: {
-                        "Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+                        "Authorization": "Token 23fd4d43cc151db137ef652d78f9af390c2a1f91"
                     },
 
                     success: function (data) {

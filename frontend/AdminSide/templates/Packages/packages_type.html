@@ -134,7 +134,7 @@
                             type: 'GET',
                             dataType: 'json',
 							headers:{
-							"Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+							"Authorization": "Token 23fd4d43cc151db137ef652d78f9af390c2a1f91"
 							},
                             success: function (data) {
                                 console.log(data);
@@ -145,20 +145,20 @@
                                         '<th scope="row">' + object.PackagesTypeId + '</th>' +
                                         '<td>' + object.PackagesTypeName + '</td>' +
                                         '<td>' +
-                                            `<a href="#" class="btn btn-danger" id="delete-btn-${object.HotelsTypeId}"><i class="material-icons">delete</i></a>`+
+                                            `<a href="#" class="btn btn-danger" id="delete-btn-${object.PackagesTypeId}"><i class="material-icons">delete</i></a>`+
                                        '</td>' +
                                         '</tr>'
                                     );
                                     //delete model confirmDeleteModal
-                                    $("#delete-btn-" + object.HotelsTypeId).click(function () {
+                                    $("#delete-btn-" + object.PackagesTypeId).click(function () {
                                         $("#deleteModal").modal('show');
                                         $("#deleteModel-btn").click(function () {
                                             $.ajax({
-                                                url: package_type_url + object.HotelsTypeId + "/",
+                                                url: package_type_url + object.PackagesTypeId + "/",
                                                 type: 'DELETE',
 												
 							headers:{
-							"Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+							"Authorization": "Token 23fd4d43cc151db137ef652d78f9af390c2a1f91"
 							},
                                                 dataType: 'json',
                                                 success: function (data) {
@@ -228,7 +228,7 @@
                         $.ajax({
                             url: package_type_url,
                             type: 'GET',headers:{
-							"Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+							"Authorization": "Token 23fd4d43cc151db137ef652d78f9af390c2a1f91"
 							},
                             dataType: 'json',
                             success: function (data) {
@@ -260,7 +260,7 @@
                                     "PackagesTypeName": typeName,
                                 },
 								headers:{
-							"Authorization": "Token 3e6d228ed10d57a2061861cb109011aca43fb122"
+							"Authorization": "Token 23fd4d43cc151db137ef652d78f9af390c2a1f91"
 							},
                             dataType: 'json',
                             
