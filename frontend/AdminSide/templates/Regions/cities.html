@@ -264,7 +264,6 @@
                         },
                         
                         success: function (data) {
-                            $('#countriesSelect').empty();
                             $.each(data, function (key, value) {
                                 $('#countriesSelect').append(
                                     '<option value="' + value.CountryId + '">' + value.CountryName + '</option>'
